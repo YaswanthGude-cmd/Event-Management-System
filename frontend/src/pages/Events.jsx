@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
 import "./Events.css";
 
 function Events() {
@@ -104,34 +105,7 @@ function Events() {
     <div className="events-page">
 
       {/* NAVBAR */}
-      <nav className="events-navbar">
-        <div className="events-logo">
-          <div className="events-logo-circle">A</div>
-
-          <div>
-            <h2>ANITS</h2>
-            <span>
-              Anil Neerukonda Institute of Technology & Sciences
-            </span>
-          </div>
-        </div>
-
-        <div className="events-nav-links">
-          <Link to="/">Home</Link>
-
-          <Link to="/events" className="active">
-            Events
-          </Link>
-
-          <Link to="/dashboard">
-            Dashboard
-          </Link>
-
-          <Link to="/profile">
-            Profile
-          </Link>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* HEADER */}
       <section className="events-header">

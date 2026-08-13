@@ -1,35 +1,14 @@
 import React from "react";
 import "./Home.css";
+import { Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 function Home() {
   return (
     <div className="home-page">
 
-      {/* ================= NAVBAR ================= */}
-      <nav className="home-navbar">
-
-        <div className="home-logo">
-          <div className="logo-circle">A</div>
-
-          <div>
-            <h2>ANITS</h2>
-            <p>Anil Neerukonda Institute of Technology & Sciences</p>
-          </div>
-        </div>
-
-        <div className="home-nav-links">
-          <a href="#home">Home</a>
-          <a href="#events">Events</a>
-          <a href="#about">About</a>
-          <a href="#contact">Contact</a>
-        </div>
-
-        <div className="home-auth-buttons">
-          <button className="login-button">Login</button>
-          <button className="register-button">Register</button>
-        </div>
-
-      </nav>
+      {/* NAVBAR */}
+      <Navbar />
 
       {/* ================= HERO ================= */}
       <section className="home-hero" id="home">
@@ -51,13 +30,13 @@ function Home() {
 
           <div className="hero-buttons">
 
-            <button className="explore-button">
+            <Link to="/events" className="explore-button">
               Explore Events →
-            </button>
+            </Link>
 
-            <button className="learn-button">
+            <a href="#about" className="learn-button">
               Learn More
-            </button>
+            </a>
 
           </div>
 
@@ -139,7 +118,7 @@ function Home() {
 
           <h2>Upcoming Events</h2>
 
-          <a href="#events">
+          <a href="/events">
             View All Events →
           </a>
 
@@ -147,7 +126,7 @@ function Home() {
 
         <div className="event-grid">
 
-          <div className="event-card">
+          <Link to="/events" className="event-card">
 
             <div className="event-image">
               CODE IGNITE
@@ -172,9 +151,9 @@ function Home() {
               </span>
 
             </div>
-          </div>
+          </Link>
 
-          <div className="event-card">
+          <Link to="/events" className="event-card">
 
             <div className="event-image">
               NRITYA 2K26
@@ -199,9 +178,9 @@ function Home() {
               </span>
 
             </div>
-          </div>
+          </Link>
 
-          <div className="event-card">
+          <Link to="/events" className="event-card">
 
             <div className="event-image">
               SPORTS FEST
@@ -226,9 +205,9 @@ function Home() {
               </span>
 
             </div>
-          </div>
+          </Link>
 
-          <div className="event-card">
+          <Link to="/events" className="event-card">
 
             <div className="event-image">
               TECH TALK
@@ -253,7 +232,7 @@ function Home() {
               </span>
 
             </div>
-          </div>
+          </Link>
 
         </div>
 
