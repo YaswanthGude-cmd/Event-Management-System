@@ -1,36 +1,14 @@
 import React from "react";
 import "./Home.css";
+import { Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 function Home() {
   return (
     <div className="home-page">
 
-      {/* ================= NAVBAR ================= */}
-      <nav className="home-navbar">
-
-        <div className="home-logo">
-          <div className="logo-circle">A</div>
-
-          <div>
-            <h2>ANITS</h2>
-            <p>Anil Neerukonda Institute of Technology & Sciences</p>
-          </div>
-        </div>
-
-        <div className="home-nav-links">
-          <a href="#home">Home</a>
-          <a href="#events">Events</a>
-          <a href="#about">About</a>
-          <a href="#contact">Contact</a>
-        </div>
-
-        <div className="home-auth-buttons">
-          <button className="login-button">Login</button>
-          <button className="register-button">Register</button>
-        </div>
-
-      </nav>
-
+      {/* NAVBAR */}
+      <Navbar />
 
       {/* ================= HERO ================= */}
       <section className="home-hero" id="home">
@@ -52,13 +30,13 @@ function Home() {
 
           <div className="hero-buttons">
 
-            <button className="explore-button">
+            <Link to="/events" className="explore-button">
               Explore Events →
-            </button>
+            </Link>
 
-            <button className="learn-button">
+            <a href="#about" className="learn-button">
               Learn More
-            </button>
+            </a>
 
           </div>
 
@@ -82,9 +60,7 @@ function Home() {
           </div>
 
         </div>
-
       </section>
-
 
       {/* ================= FEATURES ================= */}
       <section className="features-section">
@@ -94,7 +70,9 @@ function Home() {
 
           <div>
             <h3>Discover Events</h3>
-            <p>Find technical, cultural, sports and more events.</p>
+            <p>
+              Find technical, cultural, sports and more events.
+            </p>
           </div>
         </div>
 
@@ -103,7 +81,9 @@ function Home() {
 
           <div>
             <h3>Easy Registration</h3>
-            <p>Register for events quickly and securely.</p>
+            <p>
+              Register for events quickly and securely.
+            </p>
           </div>
         </div>
 
@@ -112,7 +92,9 @@ function Home() {
 
           <div>
             <h3>Stay Updated</h3>
-            <p>Get instant updates and reminders.</p>
+            <p>
+              Get instant updates and reminders.
+            </p>
           </div>
         </div>
 
@@ -121,12 +103,13 @@ function Home() {
 
           <div>
             <h3>Participate & Win</h3>
-            <p>Showcase your skills and win exciting prizes.</p>
+            <p>
+              Showcase your skills and win exciting prizes.
+            </p>
           </div>
         </div>
 
       </section>
-
 
       {/* ================= UPCOMING EVENTS ================= */}
       <section className="upcoming-section" id="events">
@@ -135,7 +118,7 @@ function Home() {
 
           <h2>Upcoming Events</h2>
 
-          <a href="#events">
+          <a href="/events">
             View All Events →
           </a>
 
@@ -143,91 +126,137 @@ function Home() {
 
         <div className="event-grid">
 
-          <div className="event-card">
+          <Link to="/events" className="event-card">
+
             <div className="event-image">
               CODE IGNITE
             </div>
 
             <div className="event-content">
-              <span className="event-date">AUG 12</span>
 
-              <h3>CodeIgnite 2K26</h3>
+              <span className="event-date">
+                AUG 12
+              </span>
 
-              <p>📍 CSE Seminar Hall</p>
+              <h3>
+                CodeIgnite 2K26
+              </h3>
+
+              <p>
+                📍 CSE Seminar Hall
+              </p>
 
               <span className="event-category">
                 Technical
               </span>
+
             </div>
-          </div>
+          </Link>
 
+          <Link to="/events" className="event-card">
 
-          <div className="event-card">
             <div className="event-image">
               NRITYA 2K26
             </div>
 
             <div className="event-content">
-              <span className="event-date">AUG 18</span>
 
-              <h3>Nritya 2K26</h3>
+              <span className="event-date">
+                AUG 18
+              </span>
 
-              <p>📍 Main Auditorium</p>
+              <h3>
+                Nritya 2K26
+              </h3>
+
+              <p>
+                📍 Main Auditorium
+              </p>
 
               <span className="event-category cultural">
                 Cultural
               </span>
+
             </div>
-          </div>
+          </Link>
 
+          <Link to="/events" className="event-card">
 
-          <div className="event-card">
             <div className="event-image">
               SPORTS FEST
             </div>
 
             <div className="event-content">
-              <span className="event-date">AUG 24</span>
 
-              <h3>Sports Fest 2K26</h3>
+              <span className="event-date">
+                AUG 24
+              </span>
 
-              <p>📍 ANITS Ground</p>
+              <h3>
+                Sports Fest 2K26
+              </h3>
+
+              <p>
+                📍 ANITS Ground
+              </p>
 
               <span className="event-category sports">
                 Sports
               </span>
+
             </div>
-          </div>
+          </Link>
 
+          <Link to="/events" className="event-card">
 
-          <div className="event-card">
             <div className="event-image">
               TECH TALK
             </div>
 
             <div className="event-content">
-              <span className="event-date">AUG 30</span>
 
-              <h3>Tech Talk Series</h3>
+              <span className="event-date">
+                AUG 30
+              </span>
 
-              <p>📍 CSE Block</p>
+              <h3>
+                Tech Talk Series
+              </h3>
+
+              <p>
+                📍 CSE Block
+              </p>
 
               <span className="event-category workshop">
                 Workshop
               </span>
+
             </div>
-          </div>
+          </Link>
 
         </div>
 
       </section>
 
+      {/* ================= ABOUT ================= */}
+      <section className="about-section" id="about">
+
+        <h2>About ANITS Events Hub</h2>
+
+        <p>
+          ANITS Events Hub helps students discover and participate
+          in technical, cultural, sports and workshop events
+          happening across the campus.
+        </p>
+
+      </section>
 
       {/* ================= FOOTER ================= */}
       <footer className="home-footer" id="contact">
 
         <div>
           <h2>ANITS Events Hub</h2>
+
           <p>
             Connecting students with exciting campus events.
           </p>
@@ -235,6 +264,7 @@ function Home() {
 
         <div>
           <h3>Quick Links</h3>
+
           <p>Home</p>
           <p>Events</p>
           <p>About</p>
@@ -242,6 +272,7 @@ function Home() {
 
         <div>
           <h3>Contact</h3>
+
           <p>ANITS, Visakhapatnam</p>
           <p>events@anits.edu.in</p>
         </div>

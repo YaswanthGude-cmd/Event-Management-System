@@ -1,0 +1,355 @@
+/* ============================= */
+/* NAVBAR */
+/* ============================= */
+
+.navbar-container {
+  width: 100%;
+  height: 64px;
+
+  display: flex;
+  align-items: center;
+
+  padding: 0 28px;
+
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+
+  box-sizing: border-box;
+
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+
+/* ============================= */
+/* LOGO */
+/* ============================= */
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  text-decoration: none;
+
+  flex-shrink: 0;
+}
+
+.logo-circle {
+  width: 36px;
+  height: 36px;
+
+  border-radius: 50%;
+
+  background: #2563eb;
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-text h3 {
+  margin: 0;
+
+  font-size: 16px;
+  font-weight: 500;
+
+  color: #111827;
+}
+
+.logo-text span {
+  font-size: 10px;
+  color: #64748b;
+}
+
+
+/* ============================= */
+/* MENU */
+/* ============================= */
+
+.navbar-menu {
+  display: flex;
+  align-items: center;
+
+  margin-left: auto;
+}
+
+
+/* ============================= */
+/* NAVIGATION LINKS */
+/* ============================= */
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+
+  gap: 28px;
+  margin-right: 35px;
+}
+
+.navbar-links a {
+  text-decoration: none;
+
+  color: #1e293b;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  transition: color 0.2s ease;
+}
+
+.navbar-links a:hover {
+  color: #2563eb;
+}
+
+
+/* ============================= */
+/* AUTH BUTTONS */
+/* ============================= */
+
+.navbar-auth {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  flex-shrink: 0;
+}
+
+.navbar-login,
+.navbar-register,
+.navbar-logout {
+  height: 38px;
+
+  padding: 0 18px;
+
+  border-radius: 7px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  box-sizing: border-box;
+
+  cursor: pointer;
+
+  text-decoration: none;
+}
+
+
+/* Login */
+
+.navbar-login {
+  color: #2563eb;
+
+  background: #ffffff;
+
+  border: 1px solid #2563eb;
+}
+
+.navbar-login:hover {
+  background: #eff6ff;
+}
+
+
+/* Register */
+
+.navbar-register {
+  color: #ffffff;
+
+  background: #2563eb;
+
+  border: 1px solid #2563eb;
+}
+
+.navbar-register:hover {
+  background: #1d4ed8;
+}
+
+
+/* Logout */
+
+.navbar-logout {
+  color: #dc2626;
+
+  background: #ffffff;
+
+  border: 1px solid #dc2626;
+}
+
+.navbar-logout:hover {
+  color: #ffffff;
+  background: #dc2626;
+}
+
+
+/* ============================= */
+/* MOBILE MENU BUTTON */
+/* ============================= */
+
+.navbar-toggle {
+  display: none;
+
+  margin-left: auto;
+
+  width: 40px;
+  height: 40px;
+
+  border: 1px solid #d1d5db;
+  border-radius: 7px;
+
+  background: white;
+
+  cursor: pointer;
+
+  padding: 8px;
+}
+
+.navbar-toggle span {
+  display: block;
+
+  width: 100%;
+  height: 2px;
+
+  margin: 5px 0;
+
+  background: #1e293b;
+
+  border-radius: 2px;
+}
+
+
+/* ============================= */
+/* TABLET */
+/* ============================= */
+
+@media (max-width: 900px) {
+
+  .navbar-container {
+    padding: 0 20px;
+  }
+
+  .navbar-links {
+    gap: 18px;
+    margin-right: 20px;
+  }
+
+}
+
+
+/* ============================= */
+/* MOBILE */
+/* ============================= */
+
+@media (max-width: 768px) {
+
+  .navbar-container {
+    height: 64px;
+
+    padding: 0 16px;
+
+    position: relative;
+  }
+
+
+  /* Show hamburger */
+
+  .navbar-toggle {
+    display: block;
+  }
+
+
+  /* Hide menu by default */
+
+  .navbar-menu {
+    display: none;
+
+    position: absolute;
+
+    top: 64px;
+    left: 0;
+    right: 0;
+
+    background: white;
+
+    border-bottom: 1px solid #e5e7eb;
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+
+    padding: 15px;
+
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+
+  /* Show menu */
+
+  .navbar-menu.active {
+    display: flex;
+  }
+
+
+  /* Navigation */
+
+  .navbar-links {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 0;
+
+    margin: 0;
+  }
+
+  .navbar-links a {
+    padding: 12px 10px;
+
+    border-radius: 6px;
+  }
+
+  .navbar-links a:hover {
+    background: #eff6ff;
+  }
+
+
+  /* Authentication */
+
+  .navbar-auth {
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 8px;
+
+    margin-top: 10px;
+
+    padding-top: 10px;
+
+    border-top: 1px solid #e5e7eb;
+  }
+
+
+  .navbar-login,
+  .navbar-register,
+  .navbar-logout {
+    width: 100%;
+  }
+
+}
