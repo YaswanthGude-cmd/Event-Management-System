@@ -1,0 +1,168 @@
+.manage-users {
+  width: 100%;
+}
+
+.users-toolbar {
+  margin-bottom: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+.users-search input {
+  width: 320px;
+
+  padding: 11px 14px;
+
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+
+  outline: none;
+
+  font-size: 14px;
+}
+
+.users-search input:focus {
+  border-color: #2563eb;
+}
+
+.users-count {
+  color: #6b7280;
+
+  font-size: 14px;
+}
+
+.users-table-card {
+  background-color: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 10px;
+
+  overflow: hidden;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-table th {
+  padding: 14px 18px;
+
+  background-color: #f9fafb;
+
+  text-align: left;
+
+  color: #6b7280;
+
+  font-size: 12px;
+}
+
+.admin-table td {
+  padding: 15px 18px;
+
+  border-top: 1px solid #f0f0f0;
+
+  color: #374151;
+
+  font-size: 13px;
+}
+
+.user-name {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  font-weight: 500;
+}
+
+.user-avatar {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background-color: #e8f0fe;
+
+  color: #2563eb;
+
+  font-weight: 600;
+}
+
+.user-status {
+  padding: 5px 10px;
+
+  border-radius: 20px;
+
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.user-status.active {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.user-status.blocked {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+.user-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.user-actions button {
+  padding: 6px 10px;
+
+  border-radius: 6px;
+
+  font-size: 12px;
+
+  cursor: pointer;
+}
+
+.view-btn {
+  border: 1px solid #d1d5db;
+
+  background-color: #ffffff;
+
+  color: #374151;
+}
+
+.block-btn {
+  border: none;
+
+  background-color: #fee2e2;
+
+  color: #dc2626;
+}
+
+.empty-row {
+  text-align: center !important;
+
+  padding: 40px !important;
+
+  color: #9ca3af !important;
+}
+
+@media (max-width: 700px) {
+  .users-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .users-search input {
+    width: 100%;
+  }
+}

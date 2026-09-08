@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
 import "./Events.css";
 
 function Events() {
@@ -83,9 +85,11 @@ function Events() {
   ];
 
   const filteredEvents = events.filter((event) => {
+    const searchText = search.toLowerCase();
+
     const matchesSearch =
-      event.title.toLowerCase().includes(search.toLowerCase()) ||
-      event.description.toLowerCase().includes(search.toLowerCase());
+      event.title.toLowerCase().includes(searchText) ||
+      event.description.toLowerCase().includes(searchText);
 
     const matchesCategory =
       category === "All" || event.category === category;
@@ -99,45 +103,25 @@ function Events() {
 
   return (
     <div className="events-page">
-
       {/* NAVBAR */}
-      <nav className="events-navbar">
-        <div className="events-logo">
-          <div className="events-logo-circle">A</div>
-
-          <div>
-            <h2>ANITS</h2>
-            <span>
-              Anil Neerukonda Institute of Technology & Sciences
-            </span>
-          </div>
-        </div>
-
-        <div className="events-nav-links">
-          <a href="/">Home</a>
-          <a href="/events" className="active">
-            Events
-          </a>
-          <a href="/dashboard">Dashboard</a>
-          <a href="/profile">Profile</a>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* HEADER */}
       <section className="events-header">
-        <p className="small-heading">ANITS EVENT MANAGEMENT SYSTEM</p>
+        <p className="small-heading">
+          ANITS EVENT MANAGEMENT SYSTEM
+        </p>
 
         <h1>Explore Events</h1>
 
         <p>
-          Discover upcoming events, workshops, competitions and activities
-          happening at ANITS.
+          Discover upcoming events, workshops, competitions and
+          activities happening at ANITS.
         </p>
       </section>
 
       {/* SEARCH + FILTER */}
       <section className="event-controls">
-
         <div className="search-box">
           <span>🔍</span>
 
@@ -150,9 +134,12 @@ function Events() {
         </div>
 
         <div className="category-filter">
-          <label>Category:</label>
+          <label htmlFor="category">
+            Category:
+          </label>
 
           <select
+            id="category"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
@@ -163,12 +150,10 @@ function Events() {
             ))}
           </select>
         </div>
-
       </section>
 
       {/* EVENTS */}
       <section className="events-container">
-
         <div className="events-title-row">
           <h2>Upcoming Events</h2>
 
@@ -179,13 +164,12 @@ function Events() {
         </div>
 
         {filteredEvents.length > 0 ? (
-
           <div className="events-grid">
-
             {filteredEvents.map((event) => (
-
-              <div className="event-card" key={event.id}>
-
+              <div
+                className="event-card"
+                key={event.id}
+              >
                 {/* EVENT ICON */}
                 <div className="event-card-top">
                   <div className="event-icon">
@@ -199,7 +183,6 @@ function Events() {
 
                 {/* EVENT DETAILS */}
                 <div className="event-card-body">
-
                   <h3>{event.title}</h3>
 
                   <p className="event-description">
@@ -207,7 +190,6 @@ function Events() {
                   </p>
 
                   <div className="event-info">
-
                     <div>
                       <strong>📅 Date</strong>
                       <span>{event.date}</span>
@@ -222,26 +204,22 @@ function Events() {
                       <strong>📍 Venue</strong>
                       <span>{event.venue}</span>
                     </div>
-
                   </div>
 
                   <button
+                    type="button"
                     className="register-btn"
-                    onClick={() => handleRegister(event.title)}
+                    onClick={() =>
+                      handleRegister(event.title)
+                    }
                   >
                     Register Now →
                   </button>
-
                 </div>
-
               </div>
-
             ))}
-
           </div>
-
         ) : (
-
           <div className="no-events">
             <div>🔎</div>
 
@@ -251,14 +229,11 @@ function Events() {
               Try changing the search text or category.
             </p>
           </div>
-
         )}
-
       </section>
 
       {/* FOOTER */}
       <footer className="events-footer">
-
         <h3>ANITS Event Management System</h3>
 
         <p>
@@ -268,9 +243,7 @@ function Events() {
         <p className="copyright">
           © 2026 ANITS. All Rights Reserved.
         </p>
-
       </footer>
-
     </div>
   );
 }
