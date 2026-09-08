@@ -1,0 +1,161 @@
+.categories-page {
+  width: 100%;
+}
+
+.category-add-card {
+  margin-bottom: 24px;
+
+  padding: 20px;
+
+  display: flex;
+
+  gap: 12px;
+
+  background-color: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 10px;
+}
+
+.category-add-card input {
+  flex: 1;
+
+  padding: 11px 14px;
+
+  border: 1px solid #d1d5db;
+
+  border-radius: 8px;
+
+  outline: none;
+
+  font-size: 14px;
+}
+
+.category-add-card input:focus {
+  border-color: #2563eb;
+}
+
+.category-add-card button {
+  padding: 10px 16px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background-color: #2563eb;
+
+  color: #ffffff;
+
+  font-size: 13px;
+
+  cursor: pointer;
+}
+
+.category-add-card button:hover {
+  background-color: #1d4ed8;
+}
+
+.categories-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 20px;
+}
+
+.category-card {
+  padding: 20px;
+
+  background-color: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 10px;
+}
+
+.category-card-top {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-bottom: 18px;
+}
+
+.category-icon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px;
+
+  background-color: #e8f0fe;
+
+  color: #2563eb;
+
+  font-weight: 600;
+}
+
+.category-delete {
+  border: none;
+
+  background: transparent;
+
+  color: #9ca3af;
+
+  font-size: 22px;
+
+  cursor: pointer;
+}
+
+.category-delete:hover {
+  color: #dc2626;
+}
+
+.category-card h3 {
+  margin: 0 0 7px;
+
+  color: #111827;
+
+  font-size: 16px;
+}
+
+.category-card p {
+  margin: 0 0 15px;
+
+  color: #6b7280;
+
+  font-size: 13px;
+
+  line-height: 1.5;
+}
+
+.category-card span {
+  color: #2563eb;
+
+  font-size: 12px;
+
+  font-weight: 500;
+}
+
+@media (max-width: 900px) {
+  .categories-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .categories-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .category-add-card {
+    flex-direction: column;
+  }
+}

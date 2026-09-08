@@ -1,0 +1,184 @@
+.manage-events {
+  width: 100%;
+}
+
+.manage-events .admin-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.create-event-btn {
+  padding: 10px 16px;
+
+  border: none;
+  border-radius: 8px;
+
+  background-color: #2563eb;
+
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  cursor: pointer;
+}
+
+.create-event-btn:hover {
+  background-color: #1d4ed8;
+}
+
+.events-toolbar {
+  margin-bottom: 20px;
+
+  display: flex;
+  gap: 12px;
+}
+
+.events-toolbar input,
+.events-toolbar select {
+  padding: 11px 14px;
+
+  border: 1px solid #d1d5db;
+
+  border-radius: 8px;
+
+  outline: none;
+
+  font-size: 14px;
+}
+
+.events-toolbar input {
+  width: 320px;
+}
+
+.events-toolbar input:focus,
+.events-toolbar select:focus {
+  border-color: #2563eb;
+}
+
+.events-table-card {
+  background-color: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 10px;
+
+  overflow: hidden;
+}
+
+.events-table-container {
+  width: 100%;
+
+  overflow-x: auto;
+}
+
+.events-table {
+  width: 100%;
+
+  border-collapse: collapse;
+}
+
+.events-table th {
+  padding: 14px 18px;
+
+  background-color: #f9fafb;
+
+  text-align: left;
+
+  color: #6b7280;
+
+  font-size: 12px;
+
+  white-space: nowrap;
+}
+
+.events-table td {
+  padding: 15px 18px;
+
+  border-top: 1px solid #f0f0f0;
+
+  color: #374151;
+
+  font-size: 13px;
+
+  white-space: nowrap;
+}
+
+.event-status {
+  padding: 5px 10px;
+
+  border-radius: 20px;
+
+  font-size: 11px;
+}
+
+.event-status.active {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.event-status.pending {
+  background-color: #fef3c7;
+  color: #b45309;
+}
+
+.event-status.completed {
+  background-color: #e5e7eb;
+  color: #4b5563;
+}
+
+.event-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.event-actions button {
+  padding: 6px 9px;
+
+  border-radius: 6px;
+
+  font-size: 11px;
+
+  cursor: pointer;
+}
+
+.event-view-btn {
+  border: 1px solid #d1d5db;
+
+  background-color: #ffffff;
+}
+
+.event-edit-btn {
+  border: none;
+
+  background-color: #e8f0fe;
+
+  color: #2563eb;
+}
+
+.event-delete-btn {
+  border: none;
+
+  background-color: #fee2e2;
+
+  color: #dc2626;
+}
+
+@media (max-width: 700px) {
+  .manage-events .admin-page-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 15px;
+  }
+
+  .events-toolbar {
+    flex-direction: column;
+  }
+
+  .events-toolbar input {
+    width: 100%;
+  }
+}

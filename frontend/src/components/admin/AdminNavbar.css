@@ -1,0 +1,74 @@
+.admin-navbar {
+  height: 75px;
+
+  padding: 0 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background-color: #ffffff;
+
+  border-bottom: 1px solid #e5e7eb;
+}
+
+
+/* Title */
+
+.admin-navbar-title h3 {
+  margin: 0;
+
+  font-size: 20px;
+  font-weight: 600;
+
+  color: #111827;
+}
+
+
+/* Profile */
+
+.admin-navbar-profile {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  color: #374151;
+
+  font-size: 14px;
+  font-weight: 500;
+}
+
+
+/* Avatar */
+
+.admin-profile-avatar {
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background-color: #e8f0fe;
+
+  color: #2563eb;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+
+/* Responsive */
+
+@media (max-width: 600px) {
+  .admin-navbar {
+    padding: 0 16px;
+  }
+
+  .admin-navbar-title h3 {
+    font-size: 18px;
+  }
+}
