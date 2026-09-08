@@ -1,0 +1,170 @@
+.manage-organizers {
+  width: 100%;
+}
+
+.organizers-toolbar {
+  margin-bottom: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.organizers-toolbar input {
+  width: 320px;
+
+  padding: 11px 14px;
+
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+
+  outline: none;
+
+  font-size: 14px;
+}
+
+.organizers-toolbar input:focus {
+  border-color: #2563eb;
+}
+
+.organizers-toolbar span {
+  color: #6b7280;
+
+  font-size: 14px;
+}
+
+.organizers-table-card {
+  background-color: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 10px;
+
+  overflow: hidden;
+}
+
+.organizers-table-container {
+  width: 100%;
+
+  overflow-x: auto;
+}
+
+.organizers-table {
+  width: 100%;
+
+  border-collapse: collapse;
+}
+
+.organizers-table th {
+  padding: 14px 18px;
+
+  background-color: #f9fafb;
+
+  text-align: left;
+
+  color: #6b7280;
+
+  font-size: 12px;
+}
+
+.organizers-table td {
+  padding: 15px 18px;
+
+  border-top: 1px solid #f0f0f0;
+
+  color: #374151;
+
+  font-size: 13px;
+
+  white-space: nowrap;
+}
+
+.organizer-name {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  font-weight: 500;
+}
+
+.organizer-avatar {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background-color: #e8f0fe;
+
+  color: #2563eb;
+
+  font-weight: 600;
+}
+
+.organizer-status {
+  padding: 5px 10px;
+
+  border-radius: 20px;
+
+  font-size: 11px;
+}
+
+.organizer-status.approved {
+  background-color: #dcfce7;
+
+  color: #15803d;
+}
+
+.organizer-status.pending {
+  background-color: #fef3c7;
+
+  color: #b45309;
+}
+
+.organizer-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.organizer-actions button {
+  padding: 6px 10px;
+
+  border-radius: 6px;
+
+  cursor: pointer;
+
+  font-size: 12px;
+}
+
+.organizer-view-btn {
+  border: 1px solid #d1d5db;
+
+  background-color: #ffffff;
+
+  color: #374151;
+}
+
+.approve-btn {
+  border: none;
+
+  background-color: #dcfce7;
+
+  color: #15803d;
+}
+
+@media (max-width: 700px) {
+  .organizers-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+
+    gap: 12px;
+  }
+
+  .organizers-toolbar input {
+    width: 100%;
+  }
+}

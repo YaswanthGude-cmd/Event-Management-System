@@ -1,0 +1,178 @@
+.admin-profile-page {
+  width: 100%;
+}
+
+.profile-layout {
+  display: grid;
+
+  grid-template-columns: 280px 1fr;
+
+  gap: 24px;
+}
+
+
+/* Profile Card */
+
+.profile-card {
+  padding: 30px 20px;
+
+  display: flex;
+
+  align-items: center;
+
+  flex-direction: column;
+
+  background-color: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 10px;
+
+  text-align: center;
+}
+
+.profile-avatar {
+  width: 80px;
+  height: 80px;
+
+  margin-bottom: 16px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background-color: #e8f0fe;
+
+  color: #2563eb;
+
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.profile-card h2 {
+  margin: 0 0 6px;
+
+  color: #111827;
+
+  font-size: 18px;
+}
+
+.profile-card p {
+  margin: 0 0 12px;
+
+  color: #6b7280;
+
+  font-size: 13px;
+}
+
+.profile-card span {
+  padding: 5px 10px;
+
+  border-radius: 20px;
+
+  background-color: #e8f0fe;
+
+  color: #2563eb;
+
+  font-size: 11px;
+
+  font-weight: 500;
+}
+
+
+/* Form */
+
+.profile-form-card {
+  padding: 24px;
+
+  background-color: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 10px;
+}
+
+.profile-form-card h3 {
+  margin: 0 0 24px;
+
+  color: #111827;
+
+  font-size: 17px;
+}
+
+.profile-form {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 7px;
+}
+
+.form-group label {
+  color: #374151;
+
+  font-size: 13px;
+
+  font-weight: 500;
+}
+
+.form-group input {
+  padding: 11px 13px;
+
+  border: 1px solid #d1d5db;
+
+  border-radius: 8px;
+
+  outline: none;
+
+  font-size: 14px;
+}
+
+.form-group input:focus {
+  border-color: #2563eb;
+}
+
+.profile-save-btn {
+  width: fit-content;
+
+  padding: 10px 18px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background-color: #2563eb;
+
+  color: #ffffff;
+
+  font-size: 13px;
+
+  cursor: pointer;
+}
+
+.profile-save-btn:hover {
+  background-color: #1d4ed8;
+}
+
+@media (max-width: 800px) {
+  .profile-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .profile-form {
+    grid-template-columns: 1fr;
+  }
+}
