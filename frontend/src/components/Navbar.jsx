@@ -11,6 +11,8 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("userEmail");
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("userName");
 
     setMenuOpen(false);
 
@@ -34,7 +36,6 @@ const Navbar = () => {
         </div>
       </Link>
 
-
       {/* Mobile Menu Button */}
       <button
         className="navbar-toggle"
@@ -45,7 +46,6 @@ const Navbar = () => {
         <span></span>
         <span></span>
       </button>
-
 
       {/* Navigation + Auth */}
       <div className={`navbar-menu ${menuOpen ? "active" : ""}`}>
@@ -74,7 +74,6 @@ const Navbar = () => {
           )}
 
         </div>
-
 
         {/* Authentication */}
         <div className="navbar-auth">

@@ -1,0 +1,50 @@
+.organizer-navbar {
+  height: 65px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 25px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.organizer-navbar-left h2 {
+  margin: 0;
+  font-size: 22px;
+  color: #2563eb;
+}
+
+.organizer-navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.notification {
+  font-size: 21px;
+  cursor: pointer;
+}
+
+.organizer-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+}
+
+.user-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: #2563eb;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}

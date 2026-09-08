@@ -16,7 +16,9 @@ const Profile = () => {
     email: storedEmail,
     phone: localStorage.getItem("userPhone") || "+91 9876543210",
     rollNo: localStorage.getItem("userRollNo") || "22IT001",
-    department: localStorage.getItem("userDepartment") || "Information Technology",
+    department:
+      localStorage.getItem("userDepartment") ||
+      "Information Technology",
     year: localStorage.getItem("userYear") || "2nd Year",
   });
 
@@ -35,12 +37,15 @@ const Profile = () => {
     localStorage.setItem("userYear", profile.year);
 
     setIsEditing(false);
+
     alert("Profile updated successfully!");
   };
 
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("userEmail");
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("userName");
 
     navigate("/login");
   };
@@ -48,11 +53,12 @@ const Profile = () => {
   return (
     <div className="profile-page">
 
+      {/* NAVBAR */}
       <Navbar />
 
       <div className="profile-layout">
 
-        {/* Sidebar */}
+        {/* SIDEBAR */}
         <aside className="profile-sidebar">
 
           <div className="profile-avatar">
@@ -72,13 +78,17 @@ const Profile = () => {
               📄 My Registrations
             </Link>
 
-            <Link to="/profile" className="active">
+            <Link
+              to="/profile"
+              className="active"
+            >
               👤 Profile
             </Link>
 
           </nav>
 
           <button
+            type="button"
             className="profile-logout"
             onClick={handleLogout}
           >
@@ -87,12 +97,15 @@ const Profile = () => {
 
         </aside>
 
-        {/* Main Content */}
+        {/* MAIN CONTENT */}
         <main className="profile-content">
 
+          {/* HEADER */}
           <div className="profile-header">
+
             <div>
               <h1>My Profile</h1>
+
               <p>
                 Manage your personal information and account details.
               </p>
@@ -100,15 +113,17 @@ const Profile = () => {
 
             {!isEditing && (
               <button
+                type="button"
                 className="edit-profile-btn"
                 onClick={() => setIsEditing(true)}
               >
                 ✏️ Edit Profile
               </button>
             )}
+
           </div>
 
-          {/* Personal Information */}
+          {/* PERSONAL INFORMATION */}
           <section className="profile-card">
 
             <div className="card-heading">
@@ -119,9 +134,12 @@ const Profile = () => {
             <div className="profile-form">
 
               <div className="form-group">
-                <label>Full Name</label>
+                <label htmlFor="name">
+                  Full Name
+                </label>
 
                 <input
+                  id="name"
                   type="text"
                   name="name"
                   value={profile.name}
@@ -131,22 +149,30 @@ const Profile = () => {
               </div>
 
               <div className="form-group">
-                <label>Email Address</label>
+                <label htmlFor="email">
+                  Email Address
+                </label>
 
                 <input
+                  id="email"
                   type="email"
                   name="email"
                   value={profile.email}
                   disabled
                 />
 
-                <small>Email cannot be changed.</small>
+                <small>
+                  Email cannot be changed.
+                </small>
               </div>
 
               <div className="form-group">
-                <label>Phone Number</label>
+                <label htmlFor="phone">
+                  Phone Number
+                </label>
 
                 <input
+                  id="phone"
                   type="text"
                   name="phone"
                   value={profile.phone}
@@ -156,9 +182,12 @@ const Profile = () => {
               </div>
 
               <div className="form-group">
-                <label>Roll Number</label>
+                <label htmlFor="rollNo">
+                  Roll Number
+                </label>
 
                 <input
+                  id="rollNo"
                   type="text"
                   name="rollNo"
                   value={profile.rollNo}
@@ -168,9 +197,12 @@ const Profile = () => {
               </div>
 
               <div className="form-group">
-                <label>Department</label>
+                <label htmlFor="department">
+                  Department
+                </label>
 
                 <input
+                  id="department"
                   type="text"
                   name="department"
                   value={profile.department}
@@ -180,9 +212,12 @@ const Profile = () => {
               </div>
 
               <div className="form-group">
-                <label>Year</label>
+                <label htmlFor="year">
+                  Year
+                </label>
 
                 <select
+                  id="year"
                   name="year"
                   value={profile.year}
                   onChange={handleChange}
@@ -201,6 +236,7 @@ const Profile = () => {
               <div className="profile-actions">
 
                 <button
+                  type="button"
                   className="cancel-btn"
                   onClick={() => setIsEditing(false)}
                 >
@@ -208,6 +244,7 @@ const Profile = () => {
                 </button>
 
                 <button
+                  type="button"
                   className="save-btn"
                   onClick={handleSave}
                 >
@@ -219,7 +256,7 @@ const Profile = () => {
 
           </section>
 
-          {/* Account Information */}
+          {/* ACCOUNT INFORMATION */}
           <section className="profile-card">
 
             <div className="card-heading">
@@ -231,6 +268,7 @@ const Profile = () => {
 
               <div>
                 <span>Account Status</span>
+
                 <strong className="status-active">
                   ● Active
                 </strong>

@@ -9,7 +9,6 @@ import {
   FaEyeSlash,
 } from "react-icons/fa";
 
-
 const Login = () => {
   const navigate = useNavigate();
 
@@ -19,59 +18,57 @@ const Login = () => {
   const [error, setError] = useState("");
 
   const demoUsers = [
-  {
-    email: "admin@event.com",
-    password: "Admin@123",
-    role: "ADMIN",
-    name: "Admin User",
-  },
-  {
-    email: "organizer@event.com",
-    password: "Organizer@123",
-    role: "ORGANIZER",
-    name: "Demo Organizer",
-  },
-  {
-    email: "user@event.com",
-    password: "User@123",
-    role: "USER",
-    name: "Demo User",
-  },
-];
+    {
+      email: "admin@event.com",
+      password: "Admin@123",
+      role: "ADMIN",
+      name: "Admin User",
+    },
+    {
+      email: "organizer@event.com",
+      password: "Organizer@123",
+      role: "ORGANIZER",
+      name: "Demo Organizer",
+    },
+    {
+      email: "user@event.com",
+      password: "User@123",
+      role: "USER",
+      name: "Demo User",
+    },
+  ];
 
- const handleSubmit = (e) => {
-  e.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-  setError("");
+    setError("");
 
-  const user = demoUsers.find(
-    (user) =>
-      user.email === email.trim() &&
-      user.password === password
-  );
+    const user = demoUsers.find(
+      (user) =>
+        user.email === email.trim() &&
+        user.password === password
+    );
 
-  if (!user) {
-    setError("Invalid email or password");
-    return;
-  }
+    if (!user) {
+      setError("Invalid email or password");
+      return;
+    }
 
-  // Store login information
-  localStorage.setItem("isLoggedIn", "true");
-  localStorage.setItem("userEmail", user.email);
-  localStorage.setItem("userRole", user.role);
-  localStorage.setItem("userName", user.name);
+    // Store login information
+    localStorage.setItem("isLoggedIn", "true");
+    localStorage.setItem("userEmail", user.email);
+    localStorage.setItem("userRole", user.role);
+    localStorage.setItem("userName", user.name);
 
-  // Redirect based on role
-  if (user.role === "ADMIN") {
-    navigate("/admin");
-  } 
-  else if (user.role === "ORGANIZER") {
-    navigate("/organizer");
-  } 
-  else if (user.role === "USER") {
-    navigate("/home");
-  }
-};
+    // Redirect based on role
+    if (user.role === "ADMIN") {
+      navigate("/admin");
+    } else if (user.role === "ORGANIZER") {
+      navigate("/organizer");
+    } else if (user.role === "USER") {
+      navigate("/home");
+    }
+  };
 
   return (
     <div
@@ -112,7 +109,6 @@ const Login = () => {
         </div>
 
         <form onSubmit={handleSubmit}>
-
           {/* Email */}
           <div className="mb-3">
             <label className="form-label fw-semibold">
@@ -173,7 +169,6 @@ const Login = () => {
 
           {/* Remember Me / Forgot Password */}
           <div className="d-flex justify-content-between align-items-center mb-3">
-
             <div className="form-check">
               <input
                 type="checkbox"
@@ -195,7 +190,6 @@ const Login = () => {
             >
               Forgot Password?
             </Link>
-
           </div>
 
           {/* Error */}
@@ -229,7 +223,6 @@ const Login = () => {
               Register
             </Link>
           </div>
-
         </form>
       </div>
     </div>
