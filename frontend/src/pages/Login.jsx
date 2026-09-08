@@ -26,6 +26,12 @@ const Login = () => {
     name: "Admin User",
   },
   {
+    email: "organizer@event.com",
+    password: "Organizer@123",
+    role: "ORGANIZER",
+    name: "Demo Organizer",
+  },
+  {
     email: "user@event.com",
     password: "User@123",
     role: "USER",
@@ -44,15 +50,26 @@ const Login = () => {
       user.password === password
   );
 
-  if (user) {
-    localStorage.setItem("isLoggedIn", "true");
-    localStorage.setItem("userEmail", user.email);
-    localStorage.setItem("userRole", user.role);
-    localStorage.setItem("userName", user.name);
-
-    navigate("/home");
-  } else {
+  if (!user) {
     setError("Invalid email or password");
+    return;
+  }
+
+  // Store login information
+  localStorage.setItem("isLoggedIn", "true");
+  localStorage.setItem("userEmail", user.email);
+  localStorage.setItem("userRole", user.role);
+  localStorage.setItem("userName", user.name);
+
+  // Redirect based on role
+  if (user.role === "ADMIN") {
+    navigate("/admin");
+  } 
+  else if (user.role === "ORGANIZER") {
+    navigate("/organizer");
+  } 
+  else if (user.role === "USER") {
+    navigate("/home");
   }
 };
 

@@ -1,0 +1,139 @@
+.registrations-page {
+  width: 100%;
+}
+
+.registrations-toolbar {
+  margin-bottom: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.registrations-toolbar input {
+  width: 320px;
+
+  padding: 11px 14px;
+
+  border: 1px solid #d1d5db;
+
+  border-radius: 8px;
+
+  outline: none;
+
+  font-size: 14px;
+}
+
+.registrations-toolbar input:focus {
+  border-color: #2563eb;
+}
+
+.registrations-toolbar span {
+  color: #6b7280;
+
+  font-size: 14px;
+}
+
+.registrations-table-card {
+  background-color: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 10px;
+
+  overflow: hidden;
+}
+
+.registrations-table-container {
+  width: 100%;
+
+  overflow-x: auto;
+}
+
+.registrations-table {
+  width: 100%;
+
+  border-collapse: collapse;
+}
+
+.registrations-table th {
+  padding: 14px 18px;
+
+  background-color: #f9fafb;
+
+  text-align: left;
+
+  color: #6b7280;
+
+  font-size: 12px;
+
+  white-space: nowrap;
+}
+
+.registrations-table td {
+  padding: 15px 18px;
+
+  border-top: 1px solid #f0f0f0;
+
+  color: #374151;
+
+  font-size: 13px;
+
+  white-space: nowrap;
+}
+
+.registration-status {
+  padding: 5px 10px;
+
+  border-radius: 20px;
+
+  font-size: 11px;
+}
+
+.registration-status.confirmed {
+  background-color: #dcfce7;
+
+  color: #15803d;
+}
+
+.registration-status.pending {
+  background-color: #fef3c7;
+
+  color: #b45309;
+}
+
+.registration-status.cancelled {
+  background-color: #fee2e2;
+
+  color: #dc2626;
+}
+
+.registration-view-btn {
+  padding: 6px 10px;
+
+  border: 1px solid #d1d5db;
+
+  border-radius: 6px;
+
+  background-color: #ffffff;
+
+  color: #374151;
+
+  font-size: 12px;
+
+  cursor: pointer;
+}
+
+@media (max-width: 700px) {
+  .registrations-toolbar {
+    align-items: stretch;
+
+    flex-direction: column;
+
+    gap: 12px;
+  }
+
+  .registrations-toolbar input {
+    width: 100%;
+  }
+}
