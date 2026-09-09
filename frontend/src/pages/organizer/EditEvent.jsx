@@ -1,19 +1,20 @@
+
 import React, { useState } from "react";
+import "./EditEvent.css";
 
 const EditEvent = () => {
-
   const [event, setEvent] = useState({
     name: "Tech Fest 2026",
     date: "2026-09-15",
     time: "10:00",
     venue: "Main Auditorium",
-    description: "Annual technical festival"
+    description: "Annual technical festival",
   });
 
   const handleChange = (e) => {
     setEvent({
       ...event,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -26,73 +27,119 @@ const EditEvent = () => {
   };
 
   return (
-    <div style={styles.container}>
+    <div className="edit-event-page">
+      <div className="edit-event-header">
+        <p className="page-subtitle">EVENT MANAGEMENT</p>
 
-      <h1>Edit Event</h1>
+        <h1>Edit Event</h1>
 
-      <form onSubmit={handleSubmit} style={styles.form}>
+        <p className="page-description">
+          Update the details of your existing event.
+        </p>
+      </div>
 
-        <label>Event Name</label>
-        <input
-          name="name"
-          value={event.name}
-          onChange={handleChange}
-        />
+      <form
+        className="edit-event-form"
+        onSubmit={handleSubmit}
+      >
+        <div className="form-section-title">
+          <h2>Event Details</h2>
 
-        <label>Date</label>
-        <input
-          type="date"
-          name="date"
-          value={event.date}
-          onChange={handleChange}
-        />
+          <p>
+            Modify the information below and save your changes.
+          </p>
+        </div>
 
-        <label>Time</label>
-        <input
-          type="time"
-          name="time"
-          value={event.time}
-          onChange={handleChange}
-        />
+        <div className="form-group">
+          <label htmlFor="name">
+            Event Name <span>*</span>
+          </label>
 
-        <label>Venue</label>
-        <input
-          name="venue"
-          value={event.venue}
-          onChange={handleChange}
-        />
+          <input
+            id="name"
+            type="text"
+            name="name"
+            value={event.name}
+            onChange={handleChange}
+            placeholder="Enter event name"
+            required
+          />
+        </div>
 
-        <label>Description</label>
-        <textarea
-          name="description"
-          value={event.description}
-          onChange={handleChange}
-        />
+        <div className="form-row">
+          <div className="form-group">
+            <label htmlFor="date">
+              Event Date <span>*</span>
+            </label>
 
-        <button type="submit">
-          Update Event
-        </button>
+            <input
+              id="date"
+              type="date"
+              name="date"
+              value={event.date}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
+          <div className="form-group">
+            <label htmlFor="time">
+              Event Time <span>*</span>
+            </label>
+
+            <input
+              id="time"
+              type="time"
+              name="time"
+              value={event.time}
+              onChange={handleChange}
+              required
+            />
+          </div>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="venue">
+            Venue <span>*</span>
+          </label>
+
+          <input
+            id="venue"
+            type="text"
+            name="venue"
+            value={event.venue}
+            onChange={handleChange}
+            placeholder="Enter event venue"
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="description">
+            Description
+          </label>
+
+          <textarea
+            id="description"
+            name="description"
+            value={event.description}
+            onChange={handleChange}
+            placeholder="Enter event description"
+            rows="6"
+          />
+        </div>
+
+        <div className="edit-event-actions">
+          <button
+            type="submit"
+            className="update-event-btn"
+          >
+            Update Event
+          </button>
+        </div>
       </form>
-
     </div>
   );
-};
-
-const styles = {
-  container: {
-    padding: "30px"
-  },
-
-  form: {
-    backgroundColor: "white",
-    padding: "30px",
-    borderRadius: "10px",
-    maxWidth: "600px",
-    display: "flex",
-    flexDirection: "column",
-    gap: "10px"
-  }
 };
 
 export default EditEvent;

@@ -1,178 +1,164 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import "./OrganizerDashboard.css";
 
 const OrganizerDashboard = () => {
-  return (
-    <div style={styles.container}>
+  const navigate = useNavigate();
 
-      <div style={styles.header}>
+  const events = [
+    {
+      id: 1,
+      name: "Tech Fest 2026",
+      date: "15 Sep 2026",
+      venue: "Main Auditorium",
+      participants: 80,
+      status: "Upcoming",
+    },
+    {
+      id: 2,
+      name: "AI Workshop",
+      date: "20 Sep 2026",
+      venue: "Seminar Hall",
+      participants: 50,
+      status: "Upcoming",
+    },
+    {
+      id: 3,
+      name: "Hackathon",
+      date: "25 Sep 2026",
+      venue: "Lab Block",
+      participants: 118,
+      status: "Upcoming",
+    },
+  ];
+
+  return (
+    <div className="organizer-dashboard">
+
+      {/* Header */}
+      <div className="dashboard-header">
         <div>
-          <h1 style={styles.title}>Organizer Dashboard</h1>
-          <p style={styles.subtitle}>
+          <p className="page-subtitle">ORGANIZER PANEL</p>
+
+          <h1>Organizer Dashboard</h1>
+
+          <p className="dashboard-subtitle">
             Welcome back, Organizer!
           </p>
         </div>
 
-        <button style={styles.createButton}>
+        <button
+          className="create-event-btn"
+          onClick={() => navigate("/organizer/create-event")}
+        >
           + Create Event
         </button>
       </div>
 
       {/* Statistics */}
+      <div className="dashboard-stats">
 
-      <div style={styles.statsContainer}>
-
-        <div style={styles.card}>
+        <div className="stat-card">
           <h3>Total Events</h3>
-          <p style={styles.number}>12</p>
+          <p className="stat-number">12</p>
+          <span className="stat-description">
+            Events created
+          </span>
         </div>
 
-        <div style={styles.card}>
+        <div className="stat-card">
           <h3>Upcoming Events</h3>
-          <p style={styles.number}>5</p>
+          <p className="stat-number">5</p>
+          <span className="stat-description">
+            Events scheduled
+          </span>
         </div>
 
-        <div style={styles.card}>
+        <div className="stat-card">
           <h3>Total Participants</h3>
-          <p style={styles.number}>248</p>
+          <p className="stat-number">248</p>
+          <span className="stat-description">
+            Across all events
+          </span>
         </div>
 
-        <div style={styles.card}>
+        <div className="stat-card">
           <h3>Registrations</h3>
-          <p style={styles.number}>186</p>
+          <p className="stat-number">186</p>
+          <span className="stat-description">
+            Total registrations
+          </span>
         </div>
 
       </div>
 
       {/* Recent Events */}
+      <div className="recent-events">
 
-      <div style={styles.eventsSection}>
+        <div className="recent-events-header">
+          <div>
+            <h2>Recent Events</h2>
+            <p>
+              Overview of your recently created events.
+            </p>
+          </div>
 
-        <h2>Recent Events</h2>
+          <button
+            className="view-events-btn"
+            onClick={() => navigate("/organizer/my-events")}
+          >
+            View All
+          </button>
+        </div>
 
-        <table style={styles.table}>
+        <div className="table-wrapper">
+          <table className="dashboard-table">
 
-          <thead>
-            <tr>
-              <th style={styles.th}>Event Name</th>
-              <th style={styles.th}>Date</th>
-              <th style={styles.th}>Venue</th>
-              <th style={styles.th}>Participants</th>
-              <th style={styles.th}>Status</th>
-            </tr>
-          </thead>
+            <thead>
+              <tr>
+                <th>Event Name</th>
+                <th>Date</th>
+                <th>Venue</th>
+                <th>Participants</th>
+                <th>Status</th>
+              </tr>
+            </thead>
 
-          <tbody>
+            <tbody>
+              {events.map((event) => (
+                <tr key={event.id}>
+                  <td className="event-name">
+                    {event.name}
+                  </td>
 
-            <tr>
-              <td style={styles.td}>Tech Fest 2026</td>
-              <td style={styles.td}>15 Sep 2026</td>
-              <td style={styles.td}>Main Auditorium</td>
-              <td style={styles.td}>80</td>
-              <td style={styles.td}>Upcoming</td>
-            </tr>
+                  <td>
+                    {event.date}
+                  </td>
 
-            <tr>
-              <td style={styles.td}>AI Workshop</td>
-              <td style={styles.td}>20 Sep 2026</td>
-              <td style={styles.td}>Seminar Hall</td>
-              <td style={styles.td}>50</td>
-              <td style={styles.td}>Upcoming</td>
-            </tr>
+                  <td>
+                    {event.venue}
+                  </td>
 
-            <tr>
-              <td style={styles.td}>Hackathon</td>
-              <td style={styles.td}>25 Sep 2026</td>
-              <td style={styles.td}>Lab Block</td>
-              <td style={styles.td}>118</td>
-              <td style={styles.td}>Upcoming</td>
-            </tr>
+                  <td>
+                    {event.participants}
+                  </td>
 
-          </tbody>
+                  <td>
+                    <span className="event-status">
+                      {event.status}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
 
-        </table>
+          </table>
+        </div>
 
       </div>
 
     </div>
   );
-};
-
-const styles = {
-  container: {
-    padding: "30px"
-  },
-
-  header: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: "30px"
-  },
-
-  title: {
-    margin: 0,
-    fontSize: "30px",
-    color: "#111827"
-  },
-
-  subtitle: {
-    color: "#6b7280"
-  },
-
-  createButton: {
-    backgroundColor: "#2563eb",
-    color: "white",
-    border: "none",
-    padding: "12px 20px",
-    borderRadius: "6px",
-    cursor: "pointer",
-    fontSize: "15px"
-  },
-
-  statsContainer: {
-    display: "grid",
-    gridTemplateColumns: "repeat(4, 1fr)",
-    gap: "20px",
-    marginBottom: "30px"
-  },
-
-  card: {
-    backgroundColor: "white",
-    padding: "25px",
-    borderRadius: "10px",
-    boxShadow: "0 2px 8px rgba(0,0,0,0.08)"
-  },
-
-  number: {
-    fontSize: "30px",
-    fontWeight: "bold",
-    color: "#2563eb",
-    margin: "10px 0 0"
-  },
-
-  eventsSection: {
-    backgroundColor: "white",
-    padding: "25px",
-    borderRadius: "10px",
-    boxShadow: "0 2px 8px rgba(0,0,0,0.08)"
-  },
-
-  table: {
-    width: "100%",
-    borderCollapse: "collapse",
-    marginTop: "20px"
-  },
-
-  th: {
-    textAlign: "left",
-    padding: "12px",
-    borderBottom: "2px solid #e5e7eb"
-  },
-
-  td: {
-    padding: "12px",
-    borderBottom: "1px solid #e5e7eb"
-  }
 };
 
 export default OrganizerDashboard;
