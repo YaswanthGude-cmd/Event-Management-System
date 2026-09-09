@@ -103,7 +103,6 @@ function Events() {
 
   return (
     <div className="events-page">
-
       {/* NAVBAR */}
       <Navbar />
 
@@ -123,7 +122,6 @@ function Events() {
 
       {/* SEARCH + FILTER */}
       <section className="event-controls">
-
         <div className="search-box">
           <span>🔍</span>
 
@@ -152,12 +150,10 @@ function Events() {
             ))}
           </select>
         </div>
-
       </section>
 
       {/* EVENTS */}
       <section className="events-container">
-
         <div className="events-title-row">
           <h2>Upcoming Events</h2>
 
@@ -169,16 +165,13 @@ function Events() {
 
         {filteredEvents.length > 0 ? (
           <div className="events-grid">
-
             {filteredEvents.map((event) => (
               <div
                 className="event-card"
                 key={event.id}
               >
-
                 {/* EVENT ICON */}
                 <div className="event-card-top">
-
                   <div className="event-icon">
                     {event.icon}
                   </div>
@@ -186,12 +179,10 @@ function Events() {
                   <span className="event-category">
                     {event.category}
                   </span>
-
                 </div>
 
                 {/* EVENT DETAILS */}
                 <div className="event-card-body">
-
                   <h3>{event.title}</h3>
 
                   <p className="event-description">
@@ -199,7 +190,6 @@ function Events() {
                   </p>
 
                   <div className="event-info">
-
                     <div>
                       <strong>📅 Date</strong>
                       <span>{event.date}</span>
@@ -214,7 +204,6 @@ function Events() {
                       <strong>📍 Venue</strong>
                       <span>{event.venue}</span>
                     </div>
-
                   </div>
 
                   <button
@@ -226,16 +215,12 @@ function Events() {
                   >
                     Register Now →
                   </button>
-
                 </div>
-
               </div>
             ))}
-
           </div>
         ) : (
           <div className="no-events">
-
             <div>🔎</div>
 
             <h3>No Events Found</h3>
@@ -243,15 +228,12 @@ function Events() {
             <p>
               Try changing the search text or category.
             </p>
-
           </div>
         )}
-
       </section>
 
       {/* FOOTER */}
       <footer className="events-footer">
-
         <h3>ANITS Event Management System</h3>
 
         <p>
@@ -261,9 +243,7 @@ function Events() {
         <p className="copyright">
           © 2026 ANITS. All Rights Reserved.
         </p>
-
       </footer>
-
     </div>
   );
 }

@@ -1,5 +1,4 @@
-import React from "react";
-import { Link , useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import "./Dashboard.css";
 
@@ -9,13 +8,14 @@ const Dashboard = () => {
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("userEmail");
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("userName");
 
     navigate("/login");
   };
 
   return (
     <div className="dashboard-page">
-
       {/* Top Navbar */}
       <Navbar />
 
@@ -24,58 +24,44 @@ const Dashboard = () => {
 
         {/* Sidebar */}
         <aside className="dashboard-sidebar">
+          <h2>Dashboard</h2>
 
-            <h2>Dashboard</h2>
+          <nav className="sidebar-nav">
+            <Link
+              to="/dashboard"
+              className="sidebar-item active"
+            >
+              <span className="sidebar-icon">📊</span>
+              <span>Overview</span>
+            </Link>
 
-            <nav className="sidebar-nav">
+            <Link
+              to="/my-registrations"
+              className="sidebar-item"
+            >
+              <span className="sidebar-icon">📄</span>
+              <span>My Registrations</span>
+            </Link>
 
-                <Link
-                to="/dashboard"
-                className="sidebar-item active"
-                >
-                <span className="sidebar-icon">📊</span>
-                <span>Overview</span>
-                </Link>
+            <Link
+              to="/profile"
+              className="sidebar-item"
+            >
+              <span className="sidebar-icon">👤</span>
+              <span>Profile</span>
+            </Link>
+          </nav>
 
-                {/* <Link
-                to="/events"
-                className="sidebar-item"
-                >
-                <span className="sidebar-icon">🗓️</span>
-                <span>Events</span>
-                </Link> */}
-
-                <Link
-                to="/my-registrations"
-                className="sidebar-item"
-                >
-                <span className="sidebar-icon">📄</span>
-                <span>My Registrations</span>
-                </Link>
-
-                <Link
-                to="/profile"
-                className="sidebar-item"
-                >
-                <span className="sidebar-icon">👤</span>
-                <span>Profile</span>
-                </Link>
-
-            </nav>
-
-            <div className="sidebar-logout">
-
-                <button
-                className="sidebar-item"
-                onClick={handleLogout}
-                >
-                <span className="sidebar-icon">↪</span>
-                <span>Logout</span>
-                </button>
-
-            </div>
-
-            </aside>
+          <div className="sidebar-logout">
+            <button
+              className="sidebar-item"
+              onClick={handleLogout}
+            >
+              <span className="sidebar-icon">↪</span>
+              <span>Logout</span>
+            </button>
+          </div>
+        </aside>
 
         {/* Main Dashboard Content */}
         <main className="dashboard-content">
@@ -89,7 +75,10 @@ const Dashboard = () => {
               </p>
             </div>
 
-            <Link to="/events" className="browse-events-btn">
+            <Link
+              to="/events"
+              className="browse-events-btn"
+            >
               Browse Events
             </Link>
           </div>
@@ -157,7 +146,6 @@ const Dashboard = () => {
             <div className="dashboard-event-list">
 
               <div className="dashboard-event-card">
-
                 <div className="event-date-box">
                   <span>AUG</span>
                   <strong>20</strong>
@@ -165,11 +153,7 @@ const Dashboard = () => {
 
                 <div className="event-details">
                   <h3>Tech Fest 2026</h3>
-
-                  <p>
-                    💻 Technical
-                  </p>
-
+                  <p>💻 Technical</p>
                   <small>
                     📍 ANITS Auditorium
                   </small>
@@ -181,11 +165,9 @@ const Dashboard = () => {
                 >
                   View
                 </Link>
-
               </div>
 
               <div className="dashboard-event-card">
-
                 <div className="event-date-box">
                   <span>AUG</span>
                   <strong>25</strong>
@@ -193,11 +175,7 @@ const Dashboard = () => {
 
                 <div className="event-details">
                   <h3>Hackathon 2026</h3>
-
-                  <p>
-                    🚀 Technical
-                  </p>
-
+                  <p>🚀 Technical</p>
                   <small>
                     📍 Computer Science Block
                   </small>
@@ -209,11 +187,9 @@ const Dashboard = () => {
                 >
                   View
                 </Link>
-
               </div>
 
               <div className="dashboard-event-card">
-
                 <div className="event-date-box">
                   <span>SEP</span>
                   <strong>05</strong>
@@ -221,11 +197,7 @@ const Dashboard = () => {
 
                 <div className="event-details">
                   <h3>Cultural Fest</h3>
-
-                  <p>
-                    🎭 Cultural
-                  </p>
-
+                  <p>🎭 Cultural</p>
                   <small>
                     📍 College Open Ground
                   </small>
@@ -237,17 +209,13 @@ const Dashboard = () => {
                 >
                   View
                 </Link>
-
               </div>
 
             </div>
-
           </section>
 
         </main>
-
       </div>
-
     </div>
   );
 };

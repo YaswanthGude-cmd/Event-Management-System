@@ -70,6 +70,8 @@ const MyRegistrations = () => {
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("userEmail");
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("userName");
 
     navigate("/login");
   };
@@ -83,12 +85,12 @@ const MyRegistrations = () => {
   return (
     <div className="registrations-page">
 
+      {/* NAVBAR */}
       <Navbar />
 
       <div className="registrations-layout">
 
-        {/* ================= SIDEBAR ================= */}
-
+        {/* SIDEBAR */}
         <aside className="registrations-sidebar">
 
           <h2>Dashboard</h2>
@@ -125,12 +127,10 @@ const MyRegistrations = () => {
 
         </aside>
 
-        {/* ================= MAIN CONTENT ================= */}
-
+        {/* MAIN CONTENT */}
         <main className="registrations-content">
 
-          {/* Header */}
-
+          {/* HEADER */}
           <div className="registrations-header">
 
             <div>
@@ -150,27 +150,21 @@ const MyRegistrations = () => {
 
           </div>
 
-          {/* ================= SUMMARY ================= */}
-
+          {/* SUMMARY */}
           <div className="registration-stats">
 
             <div className="registration-stat-card">
-
               <div className="registration-stat-icon blue">
                 📄
               </div>
 
               <div>
                 <span>Total Registrations</span>
-                <strong>
-                  {registrations.length}
-                </strong>
+                <strong>{registrations.length}</strong>
               </div>
-
             </div>
 
             <div className="registration-stat-card">
-
               <div className="registration-stat-icon green">
                 ✅
               </div>
@@ -186,11 +180,9 @@ const MyRegistrations = () => {
                   }
                 </strong>
               </div>
-
             </div>
 
             <div className="registration-stat-card">
-
               <div className="registration-stat-icon purple">
                 🏆
               </div>
@@ -206,11 +198,9 @@ const MyRegistrations = () => {
                   }
                 </strong>
               </div>
-
             </div>
 
             <div className="registration-stat-card">
-
               <div className="registration-stat-icon red">
                 ❌
               </div>
@@ -226,13 +216,11 @@ const MyRegistrations = () => {
                   }
                 </strong>
               </div>
-
             </div>
 
           </div>
 
-          {/* ================= REGISTRATION SECTION ================= */}
-
+          {/* REGISTRATION SECTION */}
           <section className="registrations-section">
 
             <div className="registrations-section-header">
@@ -251,8 +239,7 @@ const MyRegistrations = () => {
 
             </div>
 
-            {/* Registration Cards */}
-
+            {/* REGISTRATION CARDS */}
             {filteredRegistrations.length > 0 ? (
 
               <div className="registrations-list">
@@ -264,14 +251,12 @@ const MyRegistrations = () => {
                     key={registration.id}
                   >
 
-                    {/* Icon */}
-
+                    {/* ICON */}
                     <div className="registration-event-icon">
                       {registration.icon}
                     </div>
 
-                    {/* Details */}
-
+                    {/* DETAILS */}
                     <div className="registration-details">
 
                       <div className="registration-title-row">
@@ -310,8 +295,7 @@ const MyRegistrations = () => {
 
                     </div>
 
-                    {/* Actions */}
-
+                    {/* ACTIONS */}
                     <div className="registration-actions">
 
                       <Link
@@ -323,6 +307,7 @@ const MyRegistrations = () => {
 
                       {registration.status === "Registered" && (
                         <button
+                          type="button"
                           className="cancel-registration-btn"
                           onClick={() =>
                             handleCancel(registration.id)

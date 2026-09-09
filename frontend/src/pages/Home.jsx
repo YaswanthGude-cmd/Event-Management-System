@@ -1,7 +1,7 @@
 import React from "react";
-import "./Home.css";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import "./Home.css";
 
 function Home() {
   return (
@@ -10,9 +10,8 @@ function Home() {
       {/* NAVBAR */}
       <Navbar />
 
-      {/* ================= HERO ================= */}
+      {/* HERO */}
       <section className="home-hero" id="home">
-
         <div className="hero-content">
 
           <p className="hero-small-title">
@@ -29,19 +28,22 @@ function Home() {
           </p>
 
           <div className="hero-buttons">
-
-            <Link to="/events" className="explore-button">
+            <Link
+              to="/events"
+              className="explore-button"
+            >
               Explore Events →
             </Link>
 
-            <a href="#about" className="learn-button">
+            <a
+              href="#about"
+              className="learn-button"
+            >
               Learn More
             </a>
-
           </div>
 
           <div className="hero-stats">
-
             <div>
               <h2>50+</h2>
               <p>Events</p>
@@ -56,13 +58,12 @@ function Home() {
               <h2>100+</h2>
               <p>Achievements</p>
             </div>
-
           </div>
 
         </div>
       </section>
 
-      {/* ================= FEATURES ================= */}
+      {/* FEATURES */}
       <section className="features-section">
 
         <div className="feature">
@@ -111,36 +112,33 @@ function Home() {
 
       </section>
 
-      {/* ================= UPCOMING EVENTS ================= */}
+      {/* UPCOMING EVENTS */}
       <section className="upcoming-section" id="events">
 
         <div className="section-title">
-
           <h2>Upcoming Events</h2>
 
-          <a href="/events">
+          <Link to="/events">
             View All Events →
-          </a>
-
+          </Link>
         </div>
 
         <div className="event-grid">
 
-          <Link to="/events" className="event-card">
-
+          <Link
+            to="/events"
+            className="event-card"
+          >
             <div className="event-image">
               CODE IGNITE
             </div>
 
             <div className="event-content">
-
               <span className="event-date">
                 AUG 12
               </span>
 
-              <h3>
-                CodeIgnite 2K26
-              </h3>
+              <h3>CodeIgnite 2K26</h3>
 
               <p>
                 📍 CSE Seminar Hall
@@ -149,25 +147,23 @@ function Home() {
               <span className="event-category">
                 Technical
               </span>
-
             </div>
           </Link>
 
-          <Link to="/events" className="event-card">
-
+          <Link
+            to="/events"
+            className="event-card"
+          >
             <div className="event-image">
               NRITYA 2K26
             </div>
 
             <div className="event-content">
-
               <span className="event-date">
                 AUG 18
               </span>
 
-              <h3>
-                Nritya 2K26
-              </h3>
+              <h3>Nritya 2K26</h3>
 
               <p>
                 📍 Main Auditorium
@@ -176,25 +172,23 @@ function Home() {
               <span className="event-category cultural">
                 Cultural
               </span>
-
             </div>
           </Link>
 
-          <Link to="/events" className="event-card">
-
+          <Link
+            to="/events"
+            className="event-card"
+          >
             <div className="event-image">
               SPORTS FEST
             </div>
 
             <div className="event-content">
-
               <span className="event-date">
                 AUG 24
               </span>
 
-              <h3>
-                Sports Fest 2K26
-              </h3>
+              <h3>Sports Fest 2K26</h3>
 
               <p>
                 📍 ANITS Ground
@@ -203,25 +197,23 @@ function Home() {
               <span className="event-category sports">
                 Sports
               </span>
-
             </div>
           </Link>
 
-          <Link to="/events" className="event-card">
-
+          <Link
+            to="/events"
+            className="event-card"
+          >
             <div className="event-image">
               TECH TALK
             </div>
 
             <div className="event-content">
-
               <span className="event-date">
                 AUG 30
               </span>
 
-              <h3>
-                Tech Talk Series
-              </h3>
+              <h3>Tech Talk Series</h3>
 
               <p>
                 📍 CSE Block
@@ -230,17 +222,17 @@ function Home() {
               <span className="event-category workshop">
                 Workshop
               </span>
-
             </div>
           </Link>
 
         </div>
-
       </section>
 
-      {/* ================= ABOUT ================= */}
-      <section className="about-section" id="about">
-
+      {/* ABOUT */}
+      <section
+        className="about-section"
+        id="about"
+      >
         <h2>About ANITS Events Hub</h2>
 
         <p>
@@ -248,12 +240,13 @@ function Home() {
           in technical, cultural, sports and workshop events
           happening across the campus.
         </p>
-
       </section>
 
-      {/* ================= FOOTER ================= */}
-      <footer className="home-footer" id="contact">
-
+      {/* FOOTER */}
+      <footer
+        className="home-footer"
+        id="contact"
+      >
         <div>
           <h2>ANITS Events Hub</h2>
 
@@ -276,7 +269,6 @@ function Home() {
           <p>ANITS, Visakhapatnam</p>
           <p>events@anits.edu.in</p>
         </div>
-
       </footer>
 
     </div>
