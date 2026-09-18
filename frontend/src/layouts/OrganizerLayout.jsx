@@ -1,26 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 
 import OrganizerNavbar from "../components/organizer/OrganizerNavbar";
 import OrganizerSidebar from "../components/organizer/OrganizerSidebar";
 
+import "./OrganizerLayout.css";
+
 const OrganizerLayout = () => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setSidebarOpen((prev) => !prev);
+  };
+
   return (
-    <div>
-      <OrganizerNavbar />
+    <div className="organizer-layout">
 
-      <OrganizerSidebar />
+      <OrganizerNavbar
+        toggleSidebar={toggleSidebar}
+      />
 
-      <main
-        style={{
-          marginLeft: "240px",
-          paddingTop: "65px",
-          minHeight: "100vh",
-          backgroundColor: "#f3f4f6"
-        }}
-      >
+      <OrganizerSidebar
+        isOpen={sidebarOpen}
+        toggleSidebar={toggleSidebar}
+      />
+
+      <main className="organizer-main-content">
         <Outlet />
       </main>
+
     </div>
   );
 };

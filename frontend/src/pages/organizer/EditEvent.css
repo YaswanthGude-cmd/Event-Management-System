@@ -1,0 +1,320 @@
+/* ================================
+   EDIT EVENT PAGE
+================================ */
+
+.edit-event-page {
+  min-height: 100vh;
+  padding: 40px 30px;
+  background: #f8fafc;
+}
+
+
+/* ================================
+   PAGE HEADER
+================================ */
+
+.edit-event-header {
+  max-width: 700px;
+  margin: 0 auto 28px;
+  text-align: center;
+}
+
+.page-subtitle {
+  margin: 0 0 8px;
+
+  color: #2563eb;
+
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.edit-event-header h1 {
+  margin: 0;
+
+  color: #111827;
+
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.page-description {
+  margin: 8px 0 0;
+
+  color: #6b7280;
+
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+
+/* ================================
+   EDIT EVENT FORM
+================================ */
+
+.edit-event-form {
+  width: 100%;
+  max-width: 700px;
+
+  margin: 0 auto;
+  padding: 32px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+
+  box-shadow:
+    0 4px 12px rgba(15, 23, 42, 0.04),
+    0 12px 30px rgba(15, 23, 42, 0.06);
+}
+
+
+/* ================================
+   FORM SECTION HEADER
+================================ */
+
+.form-section-title {
+  margin-bottom: 28px;
+  padding-bottom: 18px;
+
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.form-section-title h2 {
+  margin: 0 0 6px;
+
+  color: #1f2937;
+
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.form-section-title p {
+  margin: 0;
+
+  color: #6b7280;
+
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+
+/* ================================
+   FORM GROUP
+================================ */
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #374151;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.form-group label span {
+  color: #dc2626;
+}
+
+
+/* ================================
+   TWO COLUMN ROW
+================================ */
+
+.form-row {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 20px;
+}
+
+
+/* ================================
+   INPUTS
+================================ */
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 12px 14px;
+
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  color: #111827;
+
+  font-family: inherit;
+  font-size: 14px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+
+/* ================================
+   PLACEHOLDER
+================================ */
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #9ca3af;
+}
+
+
+/* ================================
+   INPUT FOCUS
+================================ */
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+
+  border-color: #2563eb;
+
+  box-shadow:
+    0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+
+/* ================================
+   TEXTAREA
+================================ */
+
+.form-group textarea {
+  min-height: 140px;
+
+  resize: vertical;
+
+  line-height: 1.6;
+}
+
+
+/* ================================
+   ACTION AREA
+================================ */
+
+.edit-event-actions {
+  display: flex;
+
+  justify-content: flex-end;
+
+  margin-top: 30px;
+  padding-top: 22px;
+
+  border-top: 1px solid #e5e7eb;
+}
+
+
+/* ================================
+   UPDATE BUTTON
+================================ */
+
+.update-event-btn {
+  min-width: 150px;
+
+  padding: 12px 24px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #2563eb;
+
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.update-event-btn:hover {
+  background: #1d4ed8;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 6px 14px rgba(37, 99, 235, 0.2);
+}
+
+.update-event-btn:active {
+  transform: translateY(0);
+}
+
+
+/* ================================
+   RESPONSIVE - TABLET
+================================ */
+
+@media (max-width: 768px) {
+  .edit-event-page {
+    padding: 30px 20px;
+  }
+
+  .edit-event-form {
+    padding: 25px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+
+    gap: 0;
+  }
+}
+
+
+/* ================================
+   RESPONSIVE - MOBILE
+================================ */
+
+@media (max-width: 480px) {
+  .edit-event-page {
+    padding: 20px 15px;
+  }
+
+  .edit-event-header h1 {
+    font-size: 25px;
+  }
+
+  .page-description {
+    font-size: 14px;
+  }
+
+  .edit-event-form {
+    padding: 20px;
+
+    border-radius: 10px;
+  }
+
+  .form-section-title h2 {
+    font-size: 18px;
+  }
+
+  .edit-event-actions {
+    justify-content: stretch;
+  }
+
+  .update-event-btn {
+    width: 100%;
+  }
+}

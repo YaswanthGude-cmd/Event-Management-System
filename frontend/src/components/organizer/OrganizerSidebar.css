@@ -1,42 +1,274 @@
+/* ================= SIDEBAR ================= */
+
 .organizer-sidebar {
+
   position: fixed;
+
   top: 65px;
   left: 0;
-  width: 240px;
+
+  width: 250px;
+
   height: calc(100vh - 65px);
+
   background-color: #111827;
-  padding-top: 20px;
+
+  display: flex;
+  flex-direction: column;
+
+  z-index: 999;
+
+  border-right: 1px solid #1f2937;
+
+  transition: transform 0.3s ease;
 }
 
-.sidebar-title {
-  color: white;
-  font-size: 18px;
-  font-weight: bold;
-  padding: 15px 20px;
+
+/* ================= HEADER ================= */
+
+.sidebar-header {
+
+  min-height: 70px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 18px;
+
   border-bottom: 1px solid #374151;
 }
 
+.sidebar-title {
+
+  color: white;
+
+  font-size: 17px;
+  font-weight: 600;
+
+  letter-spacing: 0.2px;
+}
+
+
+/* ================= CLOSE BUTTON ================= */
+
+.sidebar-close-btn {
+
+  display: none;
+
+  width: 35px;
+  height: 35px;
+
+  border: none;
+
+  background-color: transparent;
+
+  color: #d1d5db;
+
+  font-size: 26px;
+
+  cursor: pointer;
+
+  border-radius: 6px;
+}
+
+.sidebar-close-btn:hover {
+
+  background-color: #374151;
+
+  color: white;
+}
+
+
+/* ================= MENU ================= */
+
 .sidebar-menu {
+
   display: flex;
   flex-direction: column;
-  padding: 15px 10px;
-  gap: 5px;
+
+  gap: 6px;
+
+  padding: 18px 12px;
 }
+
+
+/* ================= LINKS ================= */
 
 .sidebar-menu a {
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
   text-decoration: none;
-  color: #d1d5db;
-  padding: 13px 15px;
-  border-radius: 6px;
-  font-size: 15px;
+
+  color: #9ca3af;
+
+  padding: 13px 14px;
+
+  border-radius: 8px;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
+
+
+/* ================= ICON ================= */
+
+.sidebar-icon {
+
+  width: 22px;
+
+  display: flex;
+  justify-content: center;
+
+  font-size: 16px;
+}
+
+
+/* ================= HOVER ================= */
 
 .sidebar-menu a:hover {
-  background-color: #374151;
+
+  background-color: #1f2937;
+
   color: white;
 }
 
+
+/* ================= ACTIVE ================= */
+
 .sidebar-menu a.active {
+
   background-color: #2563eb;
+
   color: white;
+
+  font-weight: 600;
+
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+}
+
+
+/* ================= OVERLAY ================= */
+
+.sidebar-overlay {
+
+  display: none;
+}
+
+
+/* ================= TABLET & MOBILE ================= */
+
+@media (max-width: 768px) {
+
+  .organizer-sidebar {
+
+    transform: translateX(-100%);
+
+    top: 65px;
+
+    height: calc(100vh - 65px);
+
+    z-index: 1100;
+
+    box-shadow: 8px 0 25px rgba(0, 0, 0, 0.2);
+  }
+
+
+  /* OPEN SIDEBAR */
+
+  .organizer-sidebar.sidebar-open {
+
+    transform: translateX(0);
+  }
+
+
+  /* CLOSE BUTTON */
+
+  .sidebar-close-btn {
+
+    display: block;
+  }
+
+
+  /* OVERLAY */
+
+  .sidebar-overlay {
+
+    display: block;
+
+    position: fixed;
+
+    top: 65px;
+    left: 0;
+
+    width: 100%;
+    height: calc(100vh - 65px);
+
+    background-color: rgba(0, 0, 0, 0.4);
+
+    z-index: 1050;
+  }
+
+}
+
+
+/* ================= SMALL MOBILE ================= */
+
+@media (max-width: 480px) {
+
+  .organizer-sidebar {
+
+    width: 280px;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .organizer-sidebar {
+    width: 280px;
+
+    transform: translateX(-100%);
+
+    top: 65px;
+    height: calc(100vh - 65px);
+
+    z-index: 1100;
+
+    box-shadow: 8px 0 25px rgba(0, 0, 0, 0.2);
+  }
+
+  .organizer-sidebar.sidebar-open {
+    transform: translateX(0);
+  }
+
+  .sidebar-close-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .sidebar-overlay {
+    display: block;
+
+    position: fixed;
+
+    top: 65px;
+    left: 0;
+
+    width: 100%;
+    height: calc(100vh - 65px);
+
+    background-color: rgba(0, 0, 0, 0.4);
+
+    z-index: 1050;
+  }
 }

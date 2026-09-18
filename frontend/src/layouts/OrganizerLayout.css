@@ -1,0 +1,28 @@
+.organizer-layout {
+  min-height: 100vh;
+  background-color: #f8fafc;
+}
+
+
+/* ================= MAIN CONTENT ================= */
+
+.organizer-main-content {
+  margin-left: 250px;
+  padding-top: 65px;
+
+  min-height: 100vh;
+
+  box-sizing: border-box;
+}
+
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 768px) {
+
+  .organizer-main-content {
+    margin-left: 0;
+    padding-top: 65px;
+  }
+
+}

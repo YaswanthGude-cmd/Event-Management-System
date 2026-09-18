@@ -1,0 +1,307 @@
+/* ================= PAGE ================= */
+
+.registrations-page {
+  min-height: 100vh;
+  padding: 35px 40px;
+  background: #f8fafc;
+}
+
+
+/* ================= HEADER ================= */
+
+.registrations-header {
+  max-width: 1100px;
+  margin: 0 auto 30px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 25px;
+}
+
+.registrations-header h1 {
+  margin: 0;
+  color: #111827;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.registrations-header p {
+  margin: 7px 0 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+
+/* ================= SUMMARY ================= */
+
+.registrations-summary {
+  display: flex;
+  align-items: center;
+
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+
+  overflow: hidden;
+}
+
+.registrations-summary div {
+  min-width: 90px;
+  padding: 13px 18px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  border-right: 1px solid #e5e7eb;
+}
+
+.registrations-summary div:last-child {
+  border-right: none;
+}
+
+.registrations-summary span {
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.registrations-summary strong {
+  color: #111827;
+  font-size: 20px;
+}
+
+.confirmed-count {
+  color: #16a34a !important;
+}
+
+.pending-count {
+  color: #d97706 !important;
+}
+
+
+/* ================= TABLE CONTAINER ================= */
+
+.registrations-table-container {
+  max-width: 1100px;
+  margin: 0 auto;
+
+  background: white;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+
+  overflow: hidden;
+}
+
+
+/* ================= TABLE HEADER ================= */
+
+.table-header {
+  padding: 22px 25px;
+
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.table-header h2 {
+  margin: 0;
+
+  color: #111827;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.table-header p {
+  margin: 5px 0 0;
+
+  color: #6b7280;
+  font-size: 13px;
+}
+
+
+/* ================= TABLE ================= */
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.registrations-table {
+  width: 100%;
+  min-width: 700px;
+
+  border-collapse: collapse;
+}
+
+.registrations-table th,
+.registrations-table td {
+  padding: 15px 25px;
+
+  text-align: left;
+
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.registrations-table th {
+  background: #f9fafb;
+
+  color: #374151;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.registrations-table td {
+  color: #4b5563;
+  font-size: 14px;
+}
+
+.registrations-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.registrations-table tbody tr {
+  transition: background 0.2s ease;
+}
+
+.registrations-table tbody tr:hover {
+  background: #f9fafb;
+}
+
+
+/* ================= PARTICIPANT ================= */
+
+.registration-participant {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  color: #111827;
+  font-weight: 600;
+}
+
+.participant-avatar {
+  width: 38px;
+  height: 38px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #eff6ff;
+  color: #2563eb;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+
+/* ================= EVENT ================= */
+
+.registration-event {
+  display: inline-block;
+
+  padding: 6px 10px;
+
+  background: #f3f4f6;
+  color: #374151;
+
+  border-radius: 6px;
+
+  font-size: 12px;
+  font-weight: 500;
+}
+
+
+/* ================= DATE ================= */
+
+.registration-date {
+  color: #6b7280 !important;
+}
+
+
+/* ================= STATUS ================= */
+
+.registration-status {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 6px 10px;
+
+  border-radius: 20px;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.registration-status.confirmed {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.registration-status.pending {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+
+/* ================= TABLET ================= */
+
+@media (max-width: 900px) {
+
+  .registrations-page {
+    padding: 30px 25px;
+  }
+
+  .registrations-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+}
+
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 600px) {
+
+  .registrations-page {
+    padding: 25px 15px;
+  }
+
+  .registrations-header h1 {
+    font-size: 25px;
+  }
+
+  .registrations-summary {
+    width: 100%;
+  }
+
+  .registrations-summary div {
+    flex: 1;
+
+    min-width: 0;
+
+    padding: 12px;
+  }
+
+  .registrations-summary strong {
+    font-size: 18px;
+  }
+
+  .table-header {
+    padding: 20px;
+  }
+
+  .registrations-table th,
+  .registrations-table td {
+    padding: 13px 18px;
+  }
+
+}
