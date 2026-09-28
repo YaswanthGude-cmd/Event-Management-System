@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./MyEvents.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
 const MyEvents = () => {
   const navigate = useNavigate();
 
@@ -33,11 +34,11 @@ const MyEvents = () => {
       if (userRole === "ADMIN") {
         // Admin can see all organizer events
         eventUrl =
-          "http://localhost:5000/api/organizers/events";
+          `${API_URL}/api/organizers/events`;
       } else {
         // Normal organizer sees only their own events
         eventUrl =
-          `http://localhost:5000/api/organizers/${organizerId}/events`;
+          `${API_URL}/api/organizers/${organizerId}/events`;
       }
 
       const response = await fetch(
@@ -182,7 +183,7 @@ const MyEvents = () => {
 
 
       const response = await fetch(
-        `http://localhost:5000/api/organizers/${organizerId}/events/${event._id}/cancel`,
+        `${API_URL}/api/organizers/${organizerId}/events/${event._id}/cancel`,
         {
           method: "PUT",
           headers: {

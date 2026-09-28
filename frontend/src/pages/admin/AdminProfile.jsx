@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import "./AdminProfile.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const AdminProfile = () => {
   const [user, setUser] = useState(null);
 
@@ -31,7 +33,7 @@ const AdminProfile = () => {
       }
 
       const response = await fetch(
-        `http://localhost:5000/api/admin/users/${userId}`,
+        `${API_URL}/api/admin/users/${userId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -87,7 +89,7 @@ const AdminProfile = () => {
       setSaving(true);
 
       const response = await fetch(
-        `http://localhost:5000/api/admin/users/${userId}`,
+        `${API_URL}/api/admin/users/${userId}`,
         {
           method: "PUT",
           headers: {

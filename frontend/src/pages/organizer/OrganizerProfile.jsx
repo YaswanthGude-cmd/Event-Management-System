@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./OrganizerProfile.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const OrganizerProfile = () => {
   const [user, setUser] = useState(null);
 
@@ -31,7 +33,7 @@ const OrganizerProfile = () => {
       }
 
       const response = await fetch(
-        `http://localhost:5000/api/users/${userId}`,
+        `${API_URL}/api/users/${userId}`,
         {
           method: "GET",
           headers: {
@@ -82,7 +84,7 @@ const OrganizerProfile = () => {
       const token = localStorage.getItem("token");
 
       const response = await fetch(
-        `http://localhost:5000/api/users/${userId}`,
+        `${API_URL}/api/users/${userId}`,
         {
           method: "PUT",
           headers: {

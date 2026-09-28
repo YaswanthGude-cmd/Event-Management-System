@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import "./MyRegistrations.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const MyRegistrations = () => {
   const navigate = useNavigate();
 
@@ -29,7 +31,7 @@ const MyRegistrations = () => {
       }
 
       const response = await fetch(
-        `http://localhost:5000/api/registrations/user/${userId}`,
+        `${API_URL}/api/registrations/user/${userId}`,
         {
           method: "GET",
           headers: {
@@ -68,7 +70,7 @@ const MyRegistrations = () => {
       const token = localStorage.getItem("token");
 
       const response = await fetch(
-        `http://localhost:5000/api/registrations/${registrationId}/cancel`,
+        `${API_URL}/api/registrations/${registrationId}/cancel`,
         {
           method: "PUT",
           headers: {

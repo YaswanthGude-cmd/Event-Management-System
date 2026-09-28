@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import "./EditEvent.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const EditEvent = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -109,7 +111,7 @@ const EditEvent = () => {
       // ========================================
 
       const response = await fetch(
-        `http://localhost:5000/api/organizers/${organizerId}/events/${eventId}`,
+        `${API_URL}/api/organizers/${organizerId}/events/${eventId}`,
         {
           method: "GET",
           headers: {
@@ -273,7 +275,7 @@ const EditEvent = () => {
       // ========================================
 
       const response = await fetch(
-        `http://localhost:5000/api/organizers/${organizerId}/events/${eventId}`,
+        `${API_URL}/api/organizers/${organizerId}/events/${eventId}`,
         {
           method: "PUT",
 

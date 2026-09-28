@@ -3,6 +3,8 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import "./EventDetails.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const EventDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -30,7 +32,7 @@ const EventDetails = () => {
 
       // Fetch event
       const eventResponse = await fetch(
-        `http://localhost:5000/api/events/${id}`,
+        `${API_URL}/api/events/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -49,7 +51,7 @@ const EventDetails = () => {
 
       // Check whether current user is already registered
       const registrationResponse = await fetch(
-        `http://localhost:5000/api/registrations/check/${userId}/${id}`,
+        `${API_URL}/api/registrations/check/${userId}/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -89,7 +91,7 @@ const EventDetails = () => {
       setRegistering(true);
 
       const response = await fetch(
-        "http://localhost:5000/api/registrations/register",
+        `${API_URL}/api/registrations/register`,
         {
           method: "POST",
           headers: {
@@ -143,9 +145,10 @@ const EventDetails = () => {
 
     try {
       const token = localStorage.getItem("token");
+      const API_URL = import.meta.env.VITE_API_URL;
 
       const response = await fetch(
-        `http://localhost:5000/api/registrations/${registration._id}/cancel`,
+        `${API_URL}/api/registrations/${registration._id}/cancel`,
         {
           method: "PUT",
           headers: {
