@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import "./Dashboard.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const Dashboard = () => {
   const navigate = useNavigate();
 
@@ -42,11 +44,11 @@ const Dashboard = () => {
 
       const [eventsResponse, registrationsResponse] =
         await Promise.all([
-          fetch("http://localhost:5000/api/events", {
+          fetch(`${API_URL}/api/events`, {
             headers,
           }),
           fetch(
-            `http://localhost:5000/api/registrations/user/${userId}`,
+            `${API_URL}/api/registrations/user/${userId}`,
             {
               headers,
             }

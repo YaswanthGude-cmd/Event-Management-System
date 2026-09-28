@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./ManageOrganizers.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
 const ManageOrganizers = () => {
   const [search, setSearch] = useState("");
   const [organizers, setOrganizers] = useState([]);
@@ -25,7 +26,7 @@ const ManageOrganizers = () => {
       }
 
       const response = await fetch(
-        "http://localhost:5000/api/admin/organizers",
+        `${API_URL}/api/admin/organizers`,
         {
           method: "GET",
           headers: {
@@ -67,7 +68,7 @@ const ManageOrganizers = () => {
       const token = localStorage.getItem("token");
 
       const response = await fetch(
-        `http://localhost:5000/api/admin/users/${organizer._id}/${action}`,
+        `${API_URL}/api/admin/users/${organizer._id}/${action}`,
         {
           method: "PUT",
           headers: {

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Registrations.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
 const Registrations = () => {
   const [registrations, setRegistrations] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -27,11 +28,11 @@ const Registrations = () => {
       if (userRole === "ADMIN") {
         // Admin can see registrations for all organizer events
         eventsUrl =
-          "http://localhost:5000/api/organizers/events";
+          `${API_URL}/api/organizers/events`;
       } else {
         // Normal organizer can see only their own events
         eventsUrl =
-          `http://localhost:5000/api/organizers/${userId}/events`;
+          `${API_URL}/api/organizers/${userId}/events`;
       }
 
       const eventsResponse = await fetch(eventsUrl, {
@@ -57,7 +58,7 @@ const Registrations = () => {
       // Get registrations for every event
       for (const event of events) {
         const response = await fetch(
-          `http://localhost:5000/api/registrations/event/${event._id}`,
+          `${API_URL}/api/registrations/event/${event._id}`,
           {
             method: "GET",
             headers: {

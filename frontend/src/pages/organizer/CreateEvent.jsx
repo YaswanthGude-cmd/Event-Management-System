@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CreateEvent.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
 const CreateEvent = () => {
   const navigate = useNavigate();
 
@@ -42,7 +43,7 @@ const CreateEvent = () => {
       }
 
       const response = await fetch(
-        "http://localhost:5000/api/events",
+        `${API_URL}/api/events`,
         {
           method: "POST",
           headers: {

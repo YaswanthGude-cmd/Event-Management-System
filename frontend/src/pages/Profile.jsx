@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import "./Profile.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
 const Profile = () => {
   const navigate = useNavigate();
 
@@ -45,7 +46,7 @@ const Profile = () => {
       const [userResponse, registrationsResponse] =
         await Promise.all([
           fetch(
-            `http://localhost:5000/api/users/${userId}`,
+            `${API_URL}/api/users/${userId}`,
             {
               method: "GET",
               headers,
@@ -53,7 +54,7 @@ const Profile = () => {
           ),
 
           fetch(
-            `http://localhost:5000/api/registrations/user/${userId}`,
+            `${API_URL}/api/registrations/user/${userId}`,
             {
               method: "GET",
               headers,
@@ -146,7 +147,7 @@ const Profile = () => {
       }
 
       const response = await fetch(
-        `http://localhost:5000/api/users/${userId}`,
+        `${API_URL}/api/users/${userId}`,
         {
           method: "PUT",
           headers: {
