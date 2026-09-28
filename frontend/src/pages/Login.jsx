@@ -17,58 +17,60 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
 
-  const demoUsers = [
-    {
-      email: "admin@event.com",
-      password: "Admin@123",
-      role: "ADMIN",
-      name: "Admin User",
-    },
-    {
-      email: "organizer@event.com",
-      password: "Organizer@123",
-      role: "ORGANIZER",
-      name: "Demo Organizer",
-    },
-    {
-      email: "user@event.com",
-      password: "User@123",
-      role: "USER",
-      name: "Demo User",
-    },
-  ];
+  const handleSubmit = async (e) => {
+  e.preventDefault();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  setError("");
 
-    setError("");
-
-    const user = demoUsers.find(
-      (user) =>
-        user.email === email.trim() &&
-        user.password === password
+  try {
+    const response = await fetch(
+      "http://localhost:5000/api/auth/login",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email.trim(),
+          password,
+        }),
+      }
     );
 
-    if (!user) {
-      setError("Invalid email or password");
+    const data = await response.json();
+
+    if (!response.ok) {
+      setError(data.message || "Invalid email or password");
       return;
     }
 
-    // Store login information
+    // Save JWT token
+    localStorage.setItem("token", data.token);
+
+    // Save user information
+    localStorage.setItem("userId", data.user.id);
+    localStorage.setItem("userEmail", data.user.email);
+    localStorage.setItem("userRole", data.user.role);
+    localStorage.setItem(
+      "userName",
+      `${data.user.firstName} ${data.user.lastName}`
+    );
+
     localStorage.setItem("isLoggedIn", "true");
-    localStorage.setItem("userEmail", user.email);
-    localStorage.setItem("userRole", user.role);
-    localStorage.setItem("userName", user.name);
 
     // Redirect based on role
-    if (user.role === "ADMIN") {
+    if (data.user.role === "ADMIN") {
       navigate("/admin");
-    } else if (user.role === "ORGANIZER") {
+    } else if (data.user.role === "ORGANIZER") {
       navigate("/organizer");
-    } else if (user.role === "USER") {
+    } else {
       navigate("/home");
     }
-  };
+
+  } catch (error) {
+    setError("Unable to connect to server");
+  }
+};
 
   return (
     <div

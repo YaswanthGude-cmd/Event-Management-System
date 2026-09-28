@@ -292,3 +292,17 @@
     padding: 12px 16px;
   }
 }
+
+.admin-dashboard-message {
+  padding: 30px;
+  text-align: center;
+  color: #667085;
+  font-size: 14px;
+}
+
+.admin-dashboard-message.error {
+  color: #b42318;
+  background: #fef3f2;
+  border: 1px solid #fecdca;
+  border-radius: 10px;
+}

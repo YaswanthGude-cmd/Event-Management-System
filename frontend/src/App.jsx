@@ -8,6 +8,7 @@ import Events from "./pages/Events";
 import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
 import MyRegistrations from "./pages/MyRegistrations";
+import EventDetails from "./pages/EventDetails";
 
 // Role Protection
 import RoleRoute from "./components/RoleRoute";
@@ -21,7 +22,6 @@ import ManageUsers from "./pages/admin/ManageUsers";
 import ManageOrganizers from "./pages/admin/ManageOrganizers";
 import ManageEvents from "./pages/admin/ManageEvents";
 import AdminRegistrations from "./pages/admin/Registrations";
-import Categories from "./pages/admin/Categories";
 import AdminProfile from "./pages/admin/AdminProfile";
 
 // Organizer Layout
@@ -39,6 +39,7 @@ import OrganizerRegistrations from "./pages/organizer/Registrations";
 function App() {
   return (
     <BrowserRouter>
+
       <Routes>
 
         {/* ================= AUTHENTICATION ================= */}
@@ -50,22 +51,32 @@ function App() {
 
         {/* ================= USER ROUTES ================= */}
 
-        <Route element={<RoleRoute allowedRole="USER" />}>
+        <Route element={<RoleRoute allowedRoles={["USER" , "ORGANIZER" , "ADMIN"]} />}>
+
           <Route path="/home" element={<Home />} />
+
           <Route path="/events" element={<Events />} />
+
           <Route path="/dashboard" element={<Dashboard />} />
+
           <Route path="/profile" element={<Profile />} />
+
+          <Route path="/events/:id" element={<EventDetails />} />
+
           <Route
             path="/my-registrations"
             element={<MyRegistrations />}
           />
+
         </Route>
 
 
         {/* ================= ADMIN ROUTES ================= */}
 
-        <Route element={<RoleRoute allowedRole="ADMIN" />}>
+        <Route element={<RoleRoute allowedRoles={["ADMIN"]} />}>
+
           <Route path="/admin" element={<AdminLayout />}>
+
             <Route
               index
               element={<AdminDashboard />}
@@ -92,21 +103,19 @@ function App() {
             />
 
             <Route
-              path="categories"
-              element={<Categories />}
-            />
-
-            <Route
               path="profile"
               element={<AdminProfile />}
             />
+
           </Route>
+
         </Route>
 
 
         {/* ================= ORGANIZER ROUTES ================= */}
 
-        <Route element={<RoleRoute allowedRole="ORGANIZER" />}>
+        <Route element={<RoleRoute allowedRoles={["ORGANIZER" , "ADMIN"]} />}>
+
           <Route path="/organizer" element={<OrganizerLayout />}>
 
             <Route
@@ -150,11 +159,13 @@ function App() {
             />
 
           </Route>
+
         </Route>
 
       </Routes>
+
     </BrowserRouter>
   );
 }
 
-export default App;ackend
+export default App;

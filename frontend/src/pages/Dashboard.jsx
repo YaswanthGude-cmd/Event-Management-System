@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import "./Dashboard.css";
@@ -5,7 +6,14 @@ import "./Dashboard.css";
 const Dashboard = () => {
   const navigate = useNavigate();
 
+  const [events, setEvents] = useState([]);
+  const [registrations, setRegistrations] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
   const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("userEmail");
     localStorage.removeItem("userRole");
@@ -14,15 +22,145 @@ const Dashboard = () => {
     navigate("/login");
   };
 
+  useEffect(() => {
+    fetchDashboardData();
+  }, []);
+
+  const fetchDashboardData = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const userId = localStorage.getItem("userId");
+
+      if (!token || !userId) {
+        navigate("/login");
+        return;
+      }
+
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+
+      const [eventsResponse, registrationsResponse] =
+        await Promise.all([
+          fetch("http://localhost:5000/api/events", {
+            headers,
+          }),
+          fetch(
+            `http://localhost:5000/api/registrations/user/${userId}`,
+            {
+              headers,
+            }
+          ),
+        ]);
+
+      const eventsData = await eventsResponse.json();
+      const registrationsData =
+        await registrationsResponse.json();
+
+      if (!eventsResponse.ok) {
+        throw new Error(
+          eventsData.message || "Failed to fetch events"
+        );
+      }
+
+      if (!registrationsResponse.ok) {
+        throw new Error(
+          registrationsData.message ||
+            "Failed to fetch registrations"
+        );
+      }
+
+      setEvents(eventsData.events || []);
+      setRegistrations(
+        registrationsData.registrations || []
+      );
+    } catch (error) {
+      console.error(
+        "Error fetching dashboard data:",
+        error
+      );
+
+      setError(
+        error.message || "Unable to load dashboard"
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const registeredCount = registrations.filter(
+    (registration) =>
+      registration.status === "REGISTERED"
+  ).length;
+
+  const completedCount = registrations.filter(
+    (registration) =>
+      registration.eventId?.status === "COMPLETED"
+  ).length;
+
+  const upcomingEvents = events
+    .filter((event) => event.status === "UPCOMING")
+    .sort(
+      (a, b) =>
+        new Date(a.date) - new Date(b.date)
+    )
+    .slice(0, 3);
+
+  const formatMonth = (date) => {
+    if (!date) return "";
+
+    return new Date(date)
+      .toLocaleDateString("en-US", {
+        month: "short",
+      })
+      .toUpperCase();
+  };
+
+  const formatDay = (date) => {
+    if (!date) return "";
+
+    return new Date(date).getDate();
+  };
+
+  if (loading) {
+    return (
+      <div className="dashboard-page">
+        <Navbar />
+
+        <div className="dashboard-loading">
+          <h2>Loading Dashboard...</h2>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="dashboard-page">
+        <Navbar />
+
+        <div className="dashboard-loading">
+          <h2>Unable to Load Dashboard</h2>
+          <p>{error}</p>
+
+          <button
+            className="browse-events-btn"
+            onClick={fetchDashboardData}
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="dashboard-page">
-      {/* Top Navbar */}
       <Navbar />
 
-      {/* Dashboard Layout */}
       <div className="dashboard-layout">
 
-        {/* Sidebar */}
+        {/* SIDEBAR */}
         <aside className="dashboard-sidebar">
           <h2>Dashboard</h2>
 
@@ -31,7 +169,9 @@ const Dashboard = () => {
               to="/dashboard"
               className="sidebar-item active"
             >
-              <span className="sidebar-icon">📊</span>
+              <span className="sidebar-icon">
+                📊
+              </span>
               <span>Overview</span>
             </Link>
 
@@ -39,7 +179,9 @@ const Dashboard = () => {
               to="/my-registrations"
               className="sidebar-item"
             >
-              <span className="sidebar-icon">📄</span>
+              <span className="sidebar-icon">
+                📄
+              </span>
               <span>My Registrations</span>
             </Link>
 
@@ -47,7 +189,9 @@ const Dashboard = () => {
               to="/profile"
               className="sidebar-item"
             >
-              <span className="sidebar-icon">👤</span>
+              <span className="sidebar-icon">
+                👤
+              </span>
               <span>Profile</span>
             </Link>
           </nav>
@@ -57,16 +201,18 @@ const Dashboard = () => {
               className="sidebar-item"
               onClick={handleLogout}
             >
-              <span className="sidebar-icon">↪</span>
+              <span className="sidebar-icon">
+                ↪
+              </span>
               <span>Logout</span>
             </button>
           </div>
         </aside>
 
-        {/* Main Dashboard Content */}
+        {/* MAIN CONTENT */}
         <main className="dashboard-content">
 
-          {/* Header */}
+          {/* HEADER */}
           <div className="dashboard-header">
             <div>
               <h1>Welcome Back! 👋</h1>
@@ -83,7 +229,7 @@ const Dashboard = () => {
             </Link>
           </div>
 
-          {/* Statistics */}
+          {/* STATISTICS */}
           <div className="dashboard-stats">
 
             <div className="stat-card">
@@ -93,7 +239,7 @@ const Dashboard = () => {
 
               <div>
                 <p>Total Events</p>
-                <h2>50+</h2>
+                <h2>{events.length}</h2>
               </div>
             </div>
 
@@ -104,7 +250,7 @@ const Dashboard = () => {
 
               <div>
                 <p>Registered Events</p>
-                <h2>8</h2>
+                <h2>{registeredCount}</h2>
               </div>
             </div>
 
@@ -115,7 +261,7 @@ const Dashboard = () => {
 
               <div>
                 <p>Completed Events</p>
-                <h2>5</h2>
+                <h2>{completedCount}</h2>
               </div>
             </div>
 
@@ -126,13 +272,13 @@ const Dashboard = () => {
 
               <div>
                 <p>Achievements</p>
-                <h2>3</h2>
+                <h2>0</h2>
               </div>
             </div>
 
           </div>
 
-          {/* Upcoming Events */}
+          {/* UPCOMING EVENTS */}
           <section className="dashboard-section">
 
             <div className="section-heading">
@@ -145,71 +291,63 @@ const Dashboard = () => {
 
             <div className="dashboard-event-list">
 
-              <div className="dashboard-event-card">
-                <div className="event-date-box">
-                  <span>AUG</span>
-                  <strong>20</strong>
+              {upcomingEvents.length > 0 ? (
+                upcomingEvents.map((event) => (
+                  <div
+                    className="dashboard-event-card"
+                    key={event._id}
+                  >
+
+                    <div className="event-date-box">
+                      <span>
+                        {formatMonth(event.date)}
+                      </span>
+
+                      <strong>
+                        {formatDay(event.date)}
+                      </strong>
+                    </div>
+
+                    <div className="event-details">
+                      <h3>
+                        {event.title}
+                      </h3>
+
+                      <p>
+                        💻 {event.category}
+                      </p>
+
+                      <small>
+                        📍 {event.venue}
+                      </small>
+                    </div>
+
+                    <Link
+                      to={`/events/${event._id}`}
+                      className="event-view-btn"
+                    >
+                      View
+                    </Link>
+
+                  </div>
+                ))
+              ) : (
+                <div className="dashboard-empty">
+                  <h3>No Upcoming Events</h3>
+
+                  <p>
+                    There are no upcoming events
+                    available right now.
+                  </p>
+
+                  <Link
+                    to="/events"
+                    className="browse-events-btn"
+                  >
+                    Browse Events
+                  </Link>
                 </div>
-
-                <div className="event-details">
-                  <h3>Tech Fest 2026</h3>
-                  <p>💻 Technical</p>
-                  <small>
-                    📍 ANITS Auditorium
-                  </small>
-                </div>
-
-                <Link
-                  to="/events"
-                  className="event-view-btn"
-                >
-                  View
-                </Link>
-              </div>
-
-              <div className="dashboard-event-card">
-                <div className="event-date-box">
-                  <span>AUG</span>
-                  <strong>25</strong>
-                </div>
-
-                <div className="event-details">
-                  <h3>Hackathon 2026</h3>
-                  <p>🚀 Technical</p>
-                  <small>
-                    📍 Computer Science Block
-                  </small>
-                </div>
-
-                <Link
-                  to="/events"
-                  className="event-view-btn"
-                >
-                  View
-                </Link>
-              </div>
-
-              <div className="dashboard-event-card">
-                <div className="event-date-box">
-                  <span>SEP</span>
-                  <strong>05</strong>
-                </div>
-
-                <div className="event-details">
-                  <h3>Cultural Fest</h3>
-                  <p>🎭 Cultural</p>
-                  <small>
-                    📍 College Open Ground
-                  </small>
-                </div>
-
-                <Link
-                  to="/events"
-                  className="event-view-btn"
-                >
-                  View
-                </Link>
-              </div>
+              )}
 
             </div>
           </section>

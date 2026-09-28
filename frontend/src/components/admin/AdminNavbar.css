@@ -1,19 +1,28 @@
-.admin-navbar {
-  height: 75px;
+/* =========================
+   Admin Navbar
+========================= */
 
-  padding: 0 28px;
+.admin-navbar {
+  height: 70px;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  background-color: #ffffff;
+  padding: 0 30px;
 
+  background-color: #ffffff;
   border-bottom: 1px solid #e5e7eb;
+
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 
-/* Title */
+/* =========================
+   Navbar Title
+========================= */
 
 .admin-navbar-title h3 {
   margin: 0;
@@ -25,50 +34,69 @@
 }
 
 
-/* Profile */
+/* =========================
+   Profile
+========================= */
 
 .admin-navbar-profile {
   display: flex;
   align-items: center;
+}
 
-  gap: 10px;
-
+.admin-navbar-profile span {
+  font-size: 14px;
   color: #374151;
-
-  font-size: 14px;
-  font-weight: 500;
 }
 
 
-/* Avatar */
-
-.admin-profile-avatar {
-  width: 36px;
-  height: 36px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 50%;
-
-  background-color: #e8f0fe;
-
-  color: #2563eb;
-
-  font-size: 14px;
-  font-weight: 600;
-}
-
-
-/* Responsive */
+/* =========================
+   Mobile
+========================= */
 
 @media (max-width: 600px) {
+
   .admin-navbar {
-    padding: 0 16px;
+    height: 70px;
+
+    /*
+      Reserve space for the
+      fixed hamburger button.
+    */
+    padding-left: 75px;
+    padding-right: 18px;
+  }
+
+
+  .admin-navbar-title h3 {
+    font-size: 17px;
+
+    /*
+      Prevent title from becoming
+      too wide on small screens.
+    */
+    white-space: nowrap;
+  }
+
+
+  .admin-navbar-profile span {
+    font-size: 13px;
+  }
+
+}
+
+
+/* =========================
+   Very Small Screens
+========================= */
+
+@media (max-width: 400px) {
+
+  .admin-navbar {
+    padding-left: 70px;
   }
 
   .admin-navbar-title h3 {
-    font-size: 18px;
+    font-size: 16px;
   }
+
 }

@@ -1,275 +1,416 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import "./Home.css";
 
 function Home() {
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    fetchUpcomingEvents();
+  }, []);
+
+  const fetchUpcomingEvents = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        setError("Please login to view events.");
+        setLoading(false);
+        return;
+      }
+
+      const response = await fetch(
+        "http://localhost:5000/api/events",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.message || "Failed to fetch events");
+        return;
+      }
+
+      const allEvents = data.events || data;
+
+      const upcomingEvents = allEvents
+        .filter((event) => event.status === "UPCOMING")
+        .sort(
+          (a, b) =>
+            new Date(a.date) - new Date(b.date)
+        )
+        .slice(0, 4);
+
+      setEvents(upcomingEvents);
+    } catch (error) {
+      console.error("Error fetching events:", error);
+      setError("Unable to connect to server");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const formatDate = (date) => {
+    if (!date) return "Date not available";
+
+    return new Date(date).toLocaleDateString(
+      "en-IN",
+      {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      }
+    );
+  };
+
   return (
     <div className="home-page">
 
-      {/* NAVBAR */}
       <Navbar />
 
-      {/* HERO */}
-      <section className="home-hero" id="home">
+      {/* ================= HERO ================= */}
+
+      <section className="home-hero">
+
         <div className="hero-content">
 
-          <p className="hero-small-title">
-            WELCOME TO
-          </p>
+          <span className="hero-label">
+            ANITS EVENTS HUB
+          </span>
 
           <h1>
-            ANITS <span>Events Hub</span>
+            Discover. Register. <span>Participate.</span>
           </h1>
 
-          <p className="hero-text">
-            Your one-stop platform for discovering, registering and
-            participating in exciting events across the campus.
+          <p>
+            Discover upcoming campus events, register
+            easily, and stay connected with activities
+            happening across ANITS.
           </p>
 
-          <div className="hero-buttons">
+          <div className="hero-actions">
+
             <Link
               to="/events"
-              className="explore-button"
+              className="primary-button"
             >
-              Explore Events →
+              Explore Events
             </Link>
 
-            <a
-              href="#about"
-              className="learn-button"
+            <Link
+              to="/my-registrations"
+              className="secondary-button"
             >
-              Learn More
-            </a>
-          </div>
+              My Registrations
+            </Link>
 
-          <div className="hero-stats">
-            <div>
-              <h2>50+</h2>
-              <p>Events</p>
-            </div>
-
-            <div>
-              <h2>5000+</h2>
-              <p>Students</p>
-            </div>
-
-            <div>
-              <h2>100+</h2>
-              <p>Achievements</p>
-            </div>
           </div>
 
         </div>
+
       </section>
 
-      {/* FEATURES */}
+
+      {/* ================= FEATURES ================= */}
+
       <section className="features-section">
 
-        <div className="feature">
-          <div className="feature-icon">📅</div>
+        <div className="feature-card">
+          <div className="feature-number">01</div>
 
           <div>
             <h3>Discover Events</h3>
             <p>
-              Find technical, cultural, sports and more events.
+              Find technical, cultural, sports and
+              workshop events happening on campus.
             </p>
           </div>
         </div>
 
-        <div className="feature">
-          <div className="feature-icon">✍️</div>
+
+        <div className="feature-card">
+          <div className="feature-number">02</div>
 
           <div>
             <h3>Easy Registration</h3>
             <p>
-              Register for events quickly and securely.
+              Register for events through a simple
+              and convenient process.
             </p>
           </div>
         </div>
 
-        <div className="feature">
-          <div className="feature-icon">🔔</div>
+
+        <div className="feature-card">
+          <div className="feature-number">03</div>
 
           <div>
-            <h3>Stay Updated</h3>
+            <h3>Track Activities</h3>
             <p>
-              Get instant updates and reminders.
-            </p>
-          </div>
-        </div>
-
-        <div className="feature">
-          <div className="feature-icon">🏆</div>
-
-          <div>
-            <h3>Participate & Win</h3>
-            <p>
-              Showcase your skills and win exciting prizes.
+              Manage your registrations and keep
+              track of the events you joined.
             </p>
           </div>
         </div>
 
       </section>
 
-      {/* UPCOMING EVENTS */}
-      <section className="upcoming-section" id="events">
 
-        <div className="section-title">
-          <h2>Upcoming Events</h2>
+      {/* ================= UPCOMING EVENTS ================= */}
 
-          <Link to="/events">
+      <section className="upcoming-section">
+
+        <div className="section-header">
+
+          <div>
+            <span className="section-label">
+              EVENTS
+            </span>
+
+            <h2>Upcoming Events</h2>
+
+            <p>
+              Explore the latest events happening
+              across the campus.
+            </p>
+          </div>
+
+          <Link
+            to="/events"
+            className="view-all-link"
+          >
             View All Events →
           </Link>
-        </div>
-
-        <div className="event-grid">
-
-          <Link
-            to="/events"
-            className="event-card"
-          >
-            <div className="event-image">
-              CODE IGNITE
-            </div>
-
-            <div className="event-content">
-              <span className="event-date">
-                AUG 12
-              </span>
-
-              <h3>CodeIgnite 2K26</h3>
-
-              <p>
-                📍 CSE Seminar Hall
-              </p>
-
-              <span className="event-category">
-                Technical
-              </span>
-            </div>
-          </Link>
-
-          <Link
-            to="/events"
-            className="event-card"
-          >
-            <div className="event-image">
-              NRITYA 2K26
-            </div>
-
-            <div className="event-content">
-              <span className="event-date">
-                AUG 18
-              </span>
-
-              <h3>Nritya 2K26</h3>
-
-              <p>
-                📍 Main Auditorium
-              </p>
-
-              <span className="event-category cultural">
-                Cultural
-              </span>
-            </div>
-          </Link>
-
-          <Link
-            to="/events"
-            className="event-card"
-          >
-            <div className="event-image">
-              SPORTS FEST
-            </div>
-
-            <div className="event-content">
-              <span className="event-date">
-                AUG 24
-              </span>
-
-              <h3>Sports Fest 2K26</h3>
-
-              <p>
-                📍 ANITS Ground
-              </p>
-
-              <span className="event-category sports">
-                Sports
-              </span>
-            </div>
-          </Link>
-
-          <Link
-            to="/events"
-            className="event-card"
-          >
-            <div className="event-image">
-              TECH TALK
-            </div>
-
-            <div className="event-content">
-              <span className="event-date">
-                AUG 30
-              </span>
-
-              <h3>Tech Talk Series</h3>
-
-              <p>
-                📍 CSE Block
-              </p>
-
-              <span className="event-category workshop">
-                Workshop
-              </span>
-            </div>
-          </Link>
 
         </div>
+
+
+        {/* Loading */}
+
+        {loading && (
+          <div className="event-message">
+            Loading upcoming events...
+          </div>
+        )}
+
+
+        {/* Error */}
+
+        {!loading && error && (
+          <div className="event-message error">
+            {error}
+          </div>
+        )}
+
+
+        {/* No Events */}
+
+        {!loading &&
+          !error &&
+          events.length === 0 && (
+            <div className="event-message">
+              No upcoming events available.
+            </div>
+          )}
+
+
+        {/* Events */}
+
+        {!loading &&
+          !error &&
+          events.length > 0 && (
+
+            <div className="event-grid">
+
+              {events.map((event) => (
+
+                <Link
+                  key={event._id}
+                  to={`/events/${event._id}`}
+                  className="event-card"
+                >
+
+                  <div className="event-card-top">
+
+                    <span className="event-category">
+                      {event.category || "General"}
+                    </span>
+
+                    <span className="event-date">
+                      {formatDate(event.date)}
+                    </span>
+
+                  </div>
+
+
+                  <div className="event-content">
+
+                    <h3>
+                      {event.title}
+                    </h3>
+
+                    <p className="event-description">
+                      {event.description
+                        ? event.description.length > 100
+                          ? `${event.description.substring(
+                              0,
+                              100
+                            )}...`
+                          : event.description
+                        : "No description available."}
+                    </p>
+
+                    <div className="event-location">
+                      <span>Venue</span>
+                      <strong>
+                        {event.venue || "Not specified"}
+                      </strong>
+                    </div>
+
+                  </div>
+
+
+                  <div className="event-card-footer">
+                    <span>
+                      View Event
+                    </span>
+
+                    <span className="event-arrow">
+                      →
+                    </span>
+                  </div>
+
+                </Link>
+
+              ))}
+
+            </div>
+
+          )}
+
       </section>
 
-      {/* ABOUT */}
-      <section
-        className="about-section"
-        id="about"
-      >
-        <h2>About ANITS Events Hub</h2>
 
-        <p>
-          ANITS Events Hub helps students discover and participate
-          in technical, cultural, sports and workshop events
-          happening across the campus.
-        </p>
-      </section>
+      {/* ================= ABOUT ================= */}
 
-      {/* FOOTER */}
-      <footer
-        className="home-footer"
-        id="contact"
-      >
-        <div>
-          <h2>ANITS Events Hub</h2>
+      <section className="about-section">
+
+        <div className="about-content">
+
+          <span className="section-label">
+            ABOUT
+          </span>
+
+          <h2>
+            One place for all campus events.
+          </h2>
 
           <p>
-            Connecting students with exciting campus events.
+            ANITS Events Hub provides students with
+            a centralized platform to discover events,
+            register for activities, and manage their
+            participation. It simplifies event
+            management for students and organizers.
           </p>
+
+          <Link
+            to="/events"
+            className="about-button"
+          >
+            Browse Events
+          </Link>
+
         </div>
 
-        <div>
-          <h3>Quick Links</h3>
+      </section>
 
-          <p>Home</p>
-          <p>Events</p>
-          <p>About</p>
+
+      {/* ================= FOOTER ================= */}
+
+      <footer className="home-footer">
+
+        <div className="footer-main">
+
+          <h2>
+            ANITS Events Hub
+          </h2>
+
+          <p>
+            A centralized platform for discovering
+            and participating in campus events.
+          </p>
+
         </div>
 
-        <div>
+
+        <div className="footer-column">
+
+          <h3>Navigation</h3>
+
+          <Link to="/home">
+            Home
+          </Link>
+
+          <Link to="/events">
+            Events
+          </Link>
+
+          <Link to="/dashboard">
+            Dashboard
+          </Link>
+
+          <Link to="/profile">
+            Profile
+          </Link>
+
+        </div>
+
+
+        <div className="footer-column">
+
+          <h3>Platform</h3>
+
+          <Link to="/my-registrations">
+            My Registrations
+          </Link>
+
+          <Link to="/events">
+            Browse Events
+          </Link>
+
+        </div>
+
+
+        <div className="footer-column">
+
           <h3>Contact</h3>
 
-          <p>ANITS, Visakhapatnam</p>
-          <p>events@anits.edu.in</p>
+          <p>
+            ANITS, Visakhapatnam
+          </p>
+
+          <p>
+            events@anits.edu.in
+          </p>
+
         </div>
+
       </footer>
+
+
+      <div className="footer-bottom">
+        <p>
+          © 2026 ANITS Events Hub. All rights reserved.
+        </p>
+      </div>
 
     </div>
   );

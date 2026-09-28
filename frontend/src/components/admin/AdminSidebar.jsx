@@ -1,102 +1,247 @@
 import { NavLink, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import "./AdminSidebar.css";
 
 const AdminSidebar = () => {
+
   const navigate = useNavigate();
 
+  const [isOpen, setIsOpen] = useState(false);
+
+
+  // =========================
+  // Logout
+  // =========================
+
   const handleLogout = () => {
-    // Add authentication cleanup here later
+
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+
+    localStorage.removeItem("userId");
+    localStorage.removeItem("userEmail");
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("userName");
+    localStorage.removeItem("isLoggedIn");
 
     navigate("/login");
   };
 
+
+  // =========================
+  // Close Sidebar
+  // =========================
+
+  const handleNavigation = () => {
+    setIsOpen(false);
+  };
+
+
+  // =========================
+  // Switch Module
+  // =========================
+
+  const switchToUser = () => {
+    setIsOpen(false);
+    navigate("/home");
+  };
+
+
+  const switchToOrganizer = () => {
+    setIsOpen(false);
+    navigate("/organizer");
+  };
+
+
   return (
-    <aside className="admin-sidebar">
+    <>
+      {/* =========================
+          Mobile Menu Button
+      ========================= */}
 
-      <div className="admin-sidebar-header">
-        <h2>Admin Panel</h2>
-      </div>
+      <button
+        className="admin-menu-btn"
+        onClick={() => setIsOpen(true)}
+        aria-label="Open admin menu"
+      >
+        ☰
+      </button>
 
-      <nav className="admin-sidebar-nav">
 
-        <NavLink
-          to="/admin"
-          end
-          className={({ isActive }) =>
-            `admin-nav-link ${isActive ? "active" : ""}`
-          }
-        >
-          <span>Dashboard</span>
-        </NavLink>
+      {/* =========================
+          Mobile Overlay
+      ========================= */}
 
-        <NavLink
-          to="/admin/users"
-          className={({ isActive }) =>
-            `admin-nav-link ${isActive ? "active" : ""}`
-          }
-        >
-          <span>Users</span>
-        </NavLink>
+      {isOpen && (
+        <div
+          className="admin-sidebar-overlay"
+          onClick={() => setIsOpen(false)}
+        ></div>
+      )}
 
-        <NavLink
-          to="/admin/organizers"
-          className={({ isActive }) =>
-            `admin-nav-link ${isActive ? "active" : ""}`
-          }
-        >
-          <span>Organizers</span>
-        </NavLink>
 
-        <NavLink
-          to="/admin/events"
-          className={({ isActive }) =>
-            `admin-nav-link ${isActive ? "active" : ""}`
-          }
-        >
-          <span>Events</span>
-        </NavLink>
+      {/* =========================
+          Sidebar
+      ========================= */}
 
-        <NavLink
-          to="/admin/registrations"
-          className={({ isActive }) =>
-            `admin-nav-link ${isActive ? "active" : ""}`
-          }
-        >
-          <span>Registrations</span>
-        </NavLink>
+      <aside
+        className={`admin-sidebar ${
+          isOpen ? "open" : ""
+        }`}
+      >
 
-        <NavLink
-          to="/admin/categories"
-          className={({ isActive }) =>
-            `admin-nav-link ${isActive ? "active" : ""}`
-          }
-        >
-          <span>Categories</span>
-        </NavLink>
+        {/* =========================
+            Sidebar Header
+        ========================= */}
 
-        <NavLink
-          to="/admin/profile"
-          className={({ isActive }) =>
-            `admin-nav-link ${isActive ? "active" : ""}`
-          }
-        >
-          <span>Profile</span>
-        </NavLink>
+        <div className="admin-sidebar-header">
 
-      </nav>
+          <h2>Admin Panel</h2>
 
-      <div className="admin-sidebar-footer">
-        <button
-          className="admin-logout-btn"
-          onClick={handleLogout}
-        >
-          Logout
-        </button>
-      </div>
+          <button
+            className="admin-close-btn"
+            onClick={() => setIsOpen(false)}
+            aria-label="Close admin menu"
+          >
+            ×
+          </button>
 
-    </aside>
+        </div>
+
+
+        {/* =========================
+            Navigation
+        ========================= */}
+
+        <nav className="admin-sidebar-nav">
+
+          <NavLink
+            to="/admin"
+            end
+            onClick={handleNavigation}
+            className={({ isActive }) =>
+              `admin-nav-link ${
+                isActive ? "active" : ""
+              }`
+            }
+          >
+            <span>Dashboard</span>
+          </NavLink>
+
+
+          <NavLink
+            to="/admin/users"
+            onClick={handleNavigation}
+            className={({ isActive }) =>
+              `admin-nav-link ${
+                isActive ? "active" : ""
+              }`
+            }
+          >
+            <span>Users</span>
+          </NavLink>
+
+
+          <NavLink
+            to="/admin/organizers"
+            onClick={handleNavigation}
+            className={({ isActive }) =>
+              `admin-nav-link ${
+                isActive ? "active" : ""
+              }`
+            }
+          >
+            <span>Organizers</span>
+          </NavLink>
+
+
+          <NavLink
+            to="/admin/events"
+            onClick={handleNavigation}
+            className={({ isActive }) =>
+              `admin-nav-link ${
+                isActive ? "active" : ""
+              }`
+            }
+          >
+            <span>Events</span>
+          </NavLink>
+
+
+          <NavLink
+            to="/admin/registrations"
+            onClick={handleNavigation}
+            className={({ isActive }) =>
+              `admin-nav-link ${
+                isActive ? "active" : ""
+              }`
+            }
+          >
+            <span>Registrations</span>
+          </NavLink>
+
+
+          {/* =========================
+              Switch Module
+          ========================= */}
+
+          <div className="admin-module-section">
+
+            <p className="admin-section-title">
+              Switch Module
+            </p>
+
+
+            <button
+              className="admin-module-btn"
+              onClick={switchToUser}
+            >
+              User Module
+            </button>
+
+
+            <button
+              className="admin-module-btn"
+              onClick={switchToOrganizer}
+            >
+              Organizer Module
+            </button>
+
+          </div>
+
+
+          <NavLink
+            to="/admin/profile"
+            onClick={handleNavigation}
+            className={({ isActive }) =>
+              `admin-nav-link ${
+                isActive ? "active" : ""
+              }`
+            }
+          >
+            <span>Profile</span>
+          </NavLink>
+
+        </nav>
+
+
+        {/* =========================
+            Footer
+        ========================= */}
+
+        <div className="admin-sidebar-footer">
+
+          <button
+            className="admin-logout-btn"
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
+
+        </div>
+
+      </aside>
+    </>
   );
 };
 

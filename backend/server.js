@@ -1,19 +1,50 @@
-require("dotenv").config();
-
 const express = require("express");
-const connectDB = require("./config/db");
+const dotenv = require("dotenv");
+const cors = require("cors");
+
+const connectDB = require("./src/config/db");
+const authRoutes = require("./src/routes/authRoutes");
+const userRoutes = require("./src/routes/userRoutes");
+const eventRoutes = require("./src/routes/eventRoutes");
+const registrationRoutes = require("./src/routes/registrationRoutes");
+const organizerRoutes = require("./src/routes/organizerRoutes");
+const adminRoutes = require("./src/routes/adminRoutes");
+const dashboardRoutes = require("./src/routes/dashboardRoutes");
+const notificationRoutes = require("./src/routes/notificationRoutes");
+const feedbackRoutes = require("./src/routes/feedbackRoutes");
+const errorHandler = require("./src/middleware/errorMiddleware");
+
+dotenv.config();
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 connectDB();
 
-app.use("/api/auth", require("./routes/authRoutes"));
-
+app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/events", eventRoutes);
+app.use("/api/registrations", registrationRoutes);
+app.use("/api/organizers", organizerRoutes);
+app.use("/api/admin", adminRoutes);
+app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/notifications", notificationRoutes);
+app.use("/api/feedback", feedbackRoutes);
 app.get("/", (req, res) => {
-    res.send("Event Management System Backend Running");
+    res.json({
+        message: "Event Management System API is running"
+    });
 });
+
+app.use((req, res) => {
+    res.status(404).json({
+        message: "API Endpoint not found"
+    });
+});
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
