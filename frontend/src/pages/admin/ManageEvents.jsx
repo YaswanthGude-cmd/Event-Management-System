@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./ManageEvents.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
 const ManageEvents = () => {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
@@ -29,7 +30,7 @@ const ManageEvents = () => {
         return;
       }
 
-      const response = await fetch("http://localhost:5000/api/admin/events", {
+      const response = await fetch(`${API_URL}/api/admin/events`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -111,7 +112,7 @@ const ManageEvents = () => {
       const token = localStorage.getItem("token");
 
       const response = await fetch(
-        `http://localhost:5000/api/admin/events/${event._id}/cancel`,
+        `${API_URL}/api/admin/events/${event._id}/cancel`,
         {
           method: "PUT",
           headers: {
@@ -169,7 +170,7 @@ const ManageEvents = () => {
       const token = localStorage.getItem("token");
 
       const response = await fetch(
-        `http://localhost:5000/api/admin/events/${event._id}`,
+        `${API_URL}/api/admin/events/${event._id}`,
         {
           method: "DELETE",
           headers: {
@@ -207,7 +208,7 @@ const ManageEvents = () => {
 
       const token = localStorage.getItem("token");
       const response = await fetch(
-        `http://localhost:5000/api/admin/events/${editingEvent._id}`,
+        `${API_URL}/api/admin/events/${editingEvent._id}`,
         {
           method: "PUT",
           headers: {

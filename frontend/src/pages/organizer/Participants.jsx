@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import "./Participants.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
 const Participants = () => {
 
   const [participants, setParticipants] = useState([]);
@@ -49,13 +50,13 @@ const Participants = () => {
 
         // Admin can view all organizer events
         eventsUrl =
-          "http://localhost:5000/api/organizers/events";
+          `${API_URL}/api/organizers/events`;
 
       } else {
 
         // Organizer can view only their own events
         eventsUrl =
-          `http://localhost:5000/api/organizers/${loggedInUserId}/events`;
+          `${API_URL}/api/organizers/${loggedInUserId}/events`;
 
       }
 
@@ -143,7 +144,7 @@ const Participants = () => {
         // ========================================
 
         const response = await fetch(
-          `http://localhost:5000/api/organizers/${organizerId}/events/${event._id}/participants`,
+          `${API_URL}/api/organizers/${organizerId}/events/${event._id}/participants`,
           {
             method: "GET",
             headers: {

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./OrganizerDashboard.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const OrganizerDashboard = () => {
 
   const navigate = useNavigate();
@@ -43,13 +45,13 @@ const OrganizerDashboard = () => {
 
         // Admin can view all organizer events
         eventUrl =
-          "http://localhost:5000/api/organizers/events";
+          `${API_URL}/api/organizers/events`;
 
       } else {
 
         // Normal organizer can view only their own events
         eventUrl =
-          `http://localhost:5000/api/organizers/${organizerId}/events`;
+          `${API_URL}/api/organizers/${organizerId}/events`;
 
       }
 
@@ -102,7 +104,7 @@ const OrganizerDashboard = () => {
             try {
 
               const response = await fetch(
-                `http://localhost:5000/api/registrations/event/${event._id}`,
+                `${API_URL}/api/registrations/event/${event._id}`,
                 {
                   method: "GET",
                   headers: {

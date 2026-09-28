@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./Registrations.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
 const Registrations = () => {
 
   const [search, setSearch] = useState("");
@@ -33,7 +34,7 @@ const Registrations = () => {
       const token = localStorage.getItem("token");
 
       const response = await fetch(
-        "http://localhost:5000/api/admin/registrations",
+        `${API_URL}/api/admin/registrations`,
         {
           method: "GET",
           headers: {
@@ -109,7 +110,7 @@ const Registrations = () => {
       const token = localStorage.getItem("token");
 
       const response = await fetch(
-        `http://localhost:5000/api/admin/registrations/${registrationId}`,
+        `${API_URL}/api/admin/registrations/${registrationId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -161,7 +162,7 @@ const Registrations = () => {
       const token = localStorage.getItem("token");
 
       const response = await fetch(
-        `http://localhost:5000/api/admin/registrations/${registrationId}/cancel`,
+        `${API_URL}/api/admin/registrations/${registrationId}/cancel`,
         {
           method: "PUT",
           headers: {

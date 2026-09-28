@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import "./Home.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 function Home() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -23,7 +25,7 @@ function Home() {
       }
 
       const response = await fetch(
-        "http://localhost:5000/api/events",
+        `${API_URL}/api/events`,
         {
           method: "GET",
           headers: {

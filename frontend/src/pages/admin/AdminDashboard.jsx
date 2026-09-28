@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 
 import "./AdminDashboard.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const AdminDashboard = () => {
   const [stats, setStats] = useState(null);
   const [recentEvents, setRecentEvents] = useState([]);
@@ -34,17 +36,17 @@ const AdminDashboard = () => {
         registrationsResponse,
       ] = await Promise.all([
         fetch(
-          "http://localhost:5000/api/dashboard/stats",
+          `${API_URL}/api/dashboard/stats`,
           { headers }
         ),
 
         fetch(
-          "http://localhost:5000/api/dashboard/recent-events",
+          `${API_URL}/api/dashboard/recent-events`,
           { headers }
         ),
 
         fetch(
-          "http://localhost:5000/api/dashboard/recent-registrations",
+          `${API_URL}/api/dashboard/recent-registrations`,
           { headers }
         ),
       ]);
