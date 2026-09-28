@@ -1,139 +1,219 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import "./Events.css";
 
 function Events() {
+
+  const navigate = useNavigate();
+
+  const [events, setEvents] = useState([]);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
 
-  const events = [
-    {
-      id: 1,
-      title: "Tech Fest 2026",
-      category: "Technical",
-      date: "August 20, 2026",
-      time: "10:00 AM - 4:00 PM",
-      venue: "ANITS Auditorium",
-      description:
-        "A technical fest featuring coding competitions, project exhibitions, quizzes and innovative ideas.",
-      icon: "💻",
-    },
-    {
-      id: 2,
-      title: "Hackathon 2026",
-      category: "Technical",
-      date: "August 25, 2026",
-      time: "9:00 AM - 6:00 PM",
-      venue: "Computer Science Block",
-      description:
-        "Participate in an exciting hackathon and build innovative solutions for real-world problems.",
-      icon: "🚀",
-    },
-    {
-      id: 3,
-      title: "Cultural Fest",
-      category: "Cultural",
-      date: "September 5, 2026",
-      time: "10:00 AM - 7:00 PM",
-      venue: "College Open Ground",
-      description:
-        "Enjoy music, dance, drama and other cultural performances by ANITS students.",
-      icon: "🎭",
-    },
-    {
-      id: 4,
-      title: "Sports Meet",
-      category: "Sports",
-      date: "September 12, 2026",
-      time: "8:00 AM - 5:00 PM",
-      venue: "ANITS Sports Ground",
-      description:
-        "Take part in exciting sports activities including cricket, volleyball, badminton and athletics.",
-      icon: "🏆",
-    },
-    {
-      id: 5,
-      title: "AI & ML Workshop",
-      category: "Workshop",
-      date: "September 18, 2026",
-      time: "10:00 AM - 2:00 PM",
-      venue: "Seminar Hall",
-      description:
-        "Learn the fundamentals of Artificial Intelligence and Machine Learning from industry experts.",
-      icon: "🤖",
-    },
-    {
-      id: 6,
-      title: "Web Development Workshop",
-      category: "Workshop",
-      date: "September 25, 2026",
-      time: "10:00 AM - 3:00 PM",
-      venue: "IT Laboratory",
-      description:
-        "Learn modern web development using HTML, CSS, JavaScript and React.",
-      icon: "🌐",
-    },
-  ];
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+
+  // ================= FETCH EVENTS =================
+
+  useEffect(() => {
+    fetchEvents();
+  }, []);
+
+
+  const fetchEvents = async () => {
+
+    try {
+
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        navigate("/login");
+        return;
+      }
+
+
+      const response = await fetch(
+        "http://localhost:5000/api/events",
+        {
+          method: "GET",
+
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+
+      const data = await response.json();
+
+
+      if (!response.ok) {
+
+        setError(
+          data.message ||
+          "Failed to fetch events"
+        );
+
+        return;
+      }
+
+
+      setEvents(data.events || []);
+
+
+    } catch (error) {
+
+      console.error(
+        "Error fetching events:",
+        error
+      );
+
+      setError(
+        "Unable to connect to server"
+      );
+
+    } finally {
+
+      setLoading(false);
+
+    }
+
+  };
+
+
+  // ================= CATEGORIES =================
 
   const categories = [
     "All",
-    "Technical",
-    "Cultural",
-    "Sports",
-    "Workshop",
+    ...new Set(
+      events.map(
+        (event) => event.category
+      )
+    ),
   ];
 
-  const filteredEvents = events.filter((event) => {
-    const searchText = search.toLowerCase();
 
-    const matchesSearch =
-      event.title.toLowerCase().includes(searchText) ||
-      event.description.toLowerCase().includes(searchText);
+  // ================= FILTER =================
 
-    const matchesCategory =
-      category === "All" || event.category === category;
+  const filteredEvents = events.filter(
+    (event) => {
 
-    return matchesSearch && matchesCategory;
-  });
+      const searchText =
+        search.toLowerCase();
 
-  const handleRegister = (eventTitle) => {
-    alert(`Registration selected for ${eventTitle}`);
+
+      const matchesSearch =
+        event.title
+          ?.toLowerCase()
+          .includes(searchText) ||
+
+        event.description
+          ?.toLowerCase()
+          .includes(searchText) ||
+
+        event.venue
+          ?.toLowerCase()
+          .includes(searchText);
+
+
+      const matchesCategory =
+        category === "All" ||
+        event.category === category;
+
+
+      return (
+        matchesSearch &&
+        matchesCategory
+      );
+
+    }
+  );
+
+
+  // ================= EVENT CLICK =================
+
+  const handleRegister = (eventId) => {
+
+    navigate(
+      `/events/${eventId}`
+    );
+
   };
+
+
+  // ================= FORMAT DATE =================
+
+  const formatDate = (date) => {
+
+    return new Date(
+      date
+    ).toLocaleDateString(
+      "en-IN",
+      {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+      }
+    );
+
+  };
+
 
   return (
     <div className="events-page">
-      {/* NAVBAR */}
+
+      {/* ================= NAVBAR ================= */}
+
       <Navbar />
 
-      {/* HEADER */}
+
+      {/* ================= HEADER ================= */}
+
       <section className="events-header">
+
         <p className="small-heading">
           ANITS EVENT MANAGEMENT SYSTEM
         </p>
 
-        <h1>Explore Events</h1>
+        <h1>
+          Explore Events
+        </h1>
 
         <p>
-          Discover upcoming events, workshops, competitions and
-          activities happening at ANITS.
+          Discover upcoming events, workshops,
+          competitions and activities happening
+          at ANITS.
         </p>
+
       </section>
 
-      {/* SEARCH + FILTER */}
+
+      {/* ================= SEARCH + FILTER ================= */}
+
       <section className="event-controls">
+
         <div className="search-box">
-          <span>🔍</span>
+
+          <span>
+            🔍
+          </span>
 
           <input
             type="text"
             placeholder="Search events..."
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) =>
+              setSearch(e.target.value)
+            }
           />
+
         </div>
 
+
         <div className="category-filter">
+
           <label htmlFor="category">
             Category:
           </label>
@@ -141,109 +221,261 @@ function Events() {
           <select
             id="category"
             value={category}
-            onChange={(e) => setCategory(e.target.value)}
+            onChange={(e) =>
+              setCategory(e.target.value)
+            }
           >
-            {categories.map((item) => (
-              <option key={item} value={item}>
-                {item}
-              </option>
-            ))}
+
+            {categories.map(
+              (item) => (
+
+                <option
+                  key={item}
+                  value={item}
+                >
+                  {item}
+                </option>
+
+              )
+            )}
+
           </select>
+
         </div>
+
       </section>
 
-      {/* EVENTS */}
-      <section className="events-container">
-        <div className="events-title-row">
-          <h2>Upcoming Events</h2>
 
-          <span>
-            {filteredEvents.length} Event
-            {filteredEvents.length !== 1 ? "s" : ""}
-          </span>
+      {/* ================= EVENTS ================= */}
+
+      <section className="events-container">
+
+        <div className="events-title-row">
+
+          <h2>
+            Upcoming Events
+          </h2>
+
+          {!loading && !error && (
+            <span>
+              {filteredEvents.length} Event
+              {filteredEvents.length !== 1
+                ? "s"
+                : ""}
+            </span>
+          )}
+
         </div>
 
-        {filteredEvents.length > 0 ? (
-          <div className="events-grid">
-            {filteredEvents.map((event) => (
-              <div
-                className="event-card"
-                key={event.id}
-              >
-                {/* EVENT ICON */}
-                <div className="event-card-top">
-                  <div className="event-icon">
-                    {event.icon}
-                  </div>
 
-                  <span className="event-category">
-                    {event.category}
-                  </span>
-                </div>
+        {/* LOADING */}
 
-                {/* EVENT DETAILS */}
-                <div className="event-card-body">
-                  <h3>{event.title}</h3>
+        {loading && (
 
-                  <p className="event-description">
-                    {event.description}
-                  </p>
-
-                  <div className="event-info">
-                    <div>
-                      <strong>📅 Date</strong>
-                      <span>{event.date}</span>
-                    </div>
-
-                    <div>
-                      <strong>⏰ Time</strong>
-                      <span>{event.time}</span>
-                    </div>
-
-                    <div>
-                      <strong>📍 Venue</strong>
-                      <span>{event.venue}</span>
-                    </div>
-                  </div>
-
-                  <button
-                    type="button"
-                    className="register-btn"
-                    onClick={() =>
-                      handleRegister(event.title)
-                    }
-                  >
-                    Register Now →
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
           <div className="no-events">
-            <div>🔎</div>
 
-            <h3>No Events Found</h3>
+            <h3>
+              Loading Events...
+            </h3>
 
             <p>
-              Try changing the search text or category.
+              Please wait while we fetch
+              the latest events.
             </p>
+
           </div>
+
         )}
+
+
+        {/* ERROR */}
+
+        {!loading && error && (
+
+          <div className="no-events">
+
+            <h3>
+              Unable to Load Events
+            </h3>
+
+            <p>
+              {error}
+            </p>
+
+            <button
+              type="button"
+              className="register-btn"
+              onClick={fetchEvents}
+            >
+              Try Again
+            </button>
+
+          </div>
+
+        )}
+
+
+        {/* EVENTS */}
+
+        {!loading &&
+          !error &&
+          filteredEvents.length > 0 && (
+
+            <div className="events-grid">
+
+              {filteredEvents.map(
+                (event) => (
+
+                  <div
+                    className="event-card"
+                    key={event._id}
+                  >
+
+                    {/* EVENT ICON */}
+
+                    <div className="event-card-top">
+
+                      <div className="event-icon">
+                        📅
+                      </div>
+
+                      <span className="event-category">
+                        {event.category}
+                      </span>
+
+                    </div>
+
+
+                    {/* EVENT DETAILS */}
+
+                    <div className="event-card-body">
+
+                      <h3>
+                        {event.title}
+                      </h3>
+
+
+                      <p className="event-description">
+                        {event.description}
+                      </p>
+
+
+                      <div className="event-info">
+
+                        <div>
+
+                          <strong>
+                            📅 Date
+                          </strong>
+
+                          <span>
+                            {formatDate(
+                              event.date
+                            )}
+                          </span>
+
+                        </div>
+
+
+                        <div>
+
+                          <strong>
+                            ⏰ Time
+                          </strong>
+
+                          <span>
+                            {event.time}
+                          </span>
+
+                        </div>
+
+
+                        <div>
+
+                          <strong>
+                            📍 Venue
+                          </strong>
+
+                          <span>
+                            {event.venue}
+                          </span>
+
+                        </div>
+
+                      </div>
+
+
+                      <button
+                        type="button"
+                        className="register-btn"
+                        onClick={() =>
+                          handleRegister(
+                            event._id
+                          )
+                        }
+                      >
+                        Register Now →
+                      </button>
+
+                    </div>
+
+                  </div>
+
+                )
+              )}
+
+            </div>
+
+          )}
+
+
+        {/* NO EVENTS */}
+
+        {!loading &&
+          !error &&
+          filteredEvents.length === 0 && (
+
+            <div className="no-events">
+
+              <div>
+                🔎
+              </div>
+
+              <h3>
+                No Events Found
+              </h3>
+
+              <p>
+                Try changing the search
+                text or category.
+              </p>
+
+            </div>
+
+          )}
+
       </section>
 
-      {/* FOOTER */}
+
+      {/* ================= FOOTER ================= */}
+
       <footer className="events-footer">
-        <h3>ANITS Event Management System</h3>
+
+        <h3>
+          ANITS Event Management System
+        </h3>
 
         <p>
-          Manage and discover college events easily.
+          Manage and discover college
+          events easily.
         </p>
 
         <p className="copyright">
           © 2026 ANITS. All Rights Reserved.
         </p>
+
       </footer>
+
     </div>
   );
 }

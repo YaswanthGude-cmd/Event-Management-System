@@ -1,55 +1,194 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./ManageUsers.css";
 
 const ManageUsers = () => {
   const [search, setSearch] = useState("");
+  const [users, setUsers] = useState([]);
 
-  const users = [
-    {
-      id: 1,
-      name: "Rahul Kumar",
-      email: "rahul@gmail.com",
-      phone: "9876543210",
-      status: "Active",
-    },
-    {
-      id: 2,
-      name: "Priya Sharma",
-      email: "priya@gmail.com",
-      phone: "9876543211",
-      status: "Active",
-    },
-    {
-      id: 3,
-      name: "Arjun Reddy",
-      email: "arjun@gmail.com",
-      phone: "9876543212",
-      status: "Blocked",
-    },
-    {
-      id: 4,
-      name: "Sneha Rao",
-      email: "sneha@gmail.com",
-      phone: "9876543213",
-      status: "Active",
-    },
-    {
-      id: 5,
-      name: "Vamsi Krishna",
-      email: "vamsi@gmail.com",
-      phone: "9876543214",
-      status: "Active",
-    },
-  ];
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  const filteredUsers = users.filter(
-    (user) =>
-      user.name.toLowerCase().includes(search.toLowerCase()) ||
-      user.email.toLowerCase().includes(search.toLowerCase())
-  );
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [actionLoading, setActionLoading] = useState(false);
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const fetchUsers = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        setError("Please login again.");
+        return;
+      }
+
+      const response = await fetch(
+        "http://localhost:5000/api/admin/users",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.message || "Failed to fetch users");
+        return;
+      }
+
+      setUsers(data.users || data);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      setError("Unable to connect to server");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleBlockToggle = async (user) => {
+    const isBlocked = user.status === "BLOCKED";
+
+    const action = isBlocked ? "unblock" : "block";
+
+    const confirmed = window.confirm(
+      `Are you sure you want to ${action} this user?`
+    );
+
+    if (!confirmed) return;
+
+    try {
+      setActionLoading(true);
+
+      const token = localStorage.getItem("token");
+
+      const response = await fetch(
+        `http://localhost:5000/api/admin/users/${user._id}/${action}`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(data.message || `Failed to ${action} user`);
+        return;
+      }
+
+      const updatedUser = data.user || data;
+
+      setUsers((prevUsers) =>
+        prevUsers.map((currentUser) =>
+          currentUser._id === user._id
+            ? {
+                ...currentUser,
+                ...updatedUser,
+                status:
+                  updatedUser.status ||
+                  (isBlocked ? "ACTIVE" : "BLOCKED"),
+              }
+            : currentUser
+        )
+      );
+
+      if (selectedUser?._id === user._id) {
+        setSelectedUser((prev) => ({
+          ...prev,
+          ...updatedUser,
+          status:
+            updatedUser.status ||
+            (isBlocked ? "ACTIVE" : "BLOCKED"),
+        }));
+      }
+    } catch (error) {
+      console.error(`Error trying to ${action} user:`, error);
+      alert("Unable to connect to server");
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handleView = (user) => {
+    setSelectedUser(user);
+  };
+
+  const closeUserDetails = () => {
+    setSelectedUser(null);
+  };
+
+  const filteredUsers = users.filter((user) => {
+    const fullName = `${user.firstName || ""} ${
+      user.lastName || ""
+    }`.trim();
+
+    return (
+      fullName
+        .toLowerCase()
+        .includes(search.toLowerCase()) ||
+      (user.email || "")
+        .toLowerCase()
+        .includes(search.toLowerCase())
+    );
+  });
+
+  const getFullName = (user) => {
+    const fullName = `${user.firstName || ""} ${
+      user.lastName || ""
+    }`.trim();
+
+    return fullName || "Unknown User";
+  };
+
+  if (loading) {
+    return (
+      <div className="manage-users">
+        <div className="admin-page-header">
+          <div>
+            <h1>Users</h1>
+            <p>Manage registered users in the system.</p>
+          </div>
+        </div>
+
+        <div className="users-table-card">
+          <div className="admin-dashboard-message">
+            Loading users...
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="manage-users">
+        <div className="admin-page-header">
+          <div>
+            <h1>Users</h1>
+            <p>Manage registered users in the system.</p>
+          </div>
+        </div>
+
+        <div className="users-table-card">
+          <div className="admin-dashboard-message error">
+            {error}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="manage-users">
+
+      {/* Header */}
 
       <div className="admin-page-header">
         <div>
@@ -58,6 +197,8 @@ const ManageUsers = () => {
         </div>
       </div>
 
+
+      {/* Toolbar */}
 
       <div className="users-toolbar">
 
@@ -76,6 +217,8 @@ const ManageUsers = () => {
 
       </div>
 
+
+      {/* Users Table */}
 
       <div className="users-table-card">
 
@@ -98,60 +241,96 @@ const ManageUsers = () => {
 
               {filteredUsers.length > 0 ? (
                 filteredUsers.map((user) => (
-                  <tr key={user.id}>
 
-                    <td>#{user.id}</td>
+                  <tr key={user._id}>
+
+                    <td>
+                      #{user._id.slice(-6)}
+                    </td>
 
                     <td>
                       <div className="user-name">
+
                         <div className="user-avatar">
-                          {user.name.charAt(0)}
+                          {getFullName(user)
+                            .charAt(0)
+                            .toUpperCase()}
                         </div>
 
-                        <span>{user.name}</span>
+                        <span>
+                          {getFullName(user)}
+                        </span>
+
                       </div>
                     </td>
 
-                    <td>{user.email}</td>
-
-                    <td>{user.phone}</td>
+                    <td>
+                      {user.email || "N/A"}
+                    </td>
 
                     <td>
+                      {user.phone || "N/A"}
+                    </td>
+
+                    <td>
+
                       <span
                         className={`user-status ${
-                          user.status === "Active"
+                          user.status === "ACTIVE"
                             ? "active"
                             : "blocked"
                         }`}
                       >
-                        {user.status}
+                        {user.status === "ACTIVE"
+                          ? "Active"
+                          : "Blocked"}
                       </span>
+
                     </td>
 
                     <td>
+
                       <div className="user-actions">
 
-                        <button className="view-btn">
+                        <button
+                          className="view-btn"
+                          onClick={() =>
+                            handleView(user)
+                          }
+                        >
                           View
                         </button>
 
-                        <button className="block-btn">
-                          {user.status === "Active"
+                        <button
+                          className="block-btn"
+                          onClick={() =>
+                            handleBlockToggle(user)
+                          }
+                          disabled={actionLoading}
+                        >
+                          {user.status === "ACTIVE"
                             ? "Block"
                             : "Unblock"}
                         </button>
 
                       </div>
+
                     </td>
 
                   </tr>
+
                 ))
               ) : (
+
                 <tr>
-                  <td colSpan="6" className="empty-row">
+                  <td
+                    colSpan="6"
+                    className="empty-row"
+                  >
                     No users found.
                   </td>
                 </tr>
+
               )}
 
             </tbody>
@@ -161,6 +340,115 @@ const ManageUsers = () => {
         </div>
 
       </div>
+
+
+      {/* User Details */}
+
+      {selectedUser && (
+
+        <div className="user-details-overlay">
+
+          <div className="user-details-modal">
+
+            <div className="user-details-header">
+
+              <div>
+                <h2>User Details</h2>
+                <p>
+                  View information about this user.
+                </p>
+              </div>
+
+              <button
+                className="close-user-modal"
+                onClick={closeUserDetails}
+              >
+                ×
+              </button>
+
+            </div>
+
+
+            <div className="user-details-content">
+
+              <div className="user-details-avatar">
+                {getFullName(selectedUser)
+                  .charAt(0)
+                  .toUpperCase()}
+              </div>
+
+              <div className="user-details-info">
+
+                <div>
+                  <span>Name</span>
+                  <strong>
+                    {getFullName(selectedUser)}
+                  </strong>
+                </div>
+
+                <div>
+                  <span>Email</span>
+                  <strong>
+                    {selectedUser.email || "N/A"}
+                  </strong>
+                </div>
+
+                <div>
+                  <span>Phone</span>
+                  <strong>
+                    {selectedUser.phone || "N/A"}
+                  </strong>
+                </div>
+
+                <div>
+                  <span>Role</span>
+                  <strong>
+                    {selectedUser.role || "N/A"}
+                  </strong>
+                </div>
+
+                <div>
+                  <span>Status</span>
+                  <strong>
+                    {selectedUser.status === "ACTIVE"
+                      ? "Active"
+                      : "Blocked"}
+                  </strong>
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <div className="user-details-actions">
+
+              <button
+                className="view-close-btn"
+                onClick={closeUserDetails}
+              >
+                Close
+              </button>
+
+              <button
+                className="block-btn"
+                onClick={() =>
+                  handleBlockToggle(selectedUser)
+                }
+                disabled={actionLoading}
+              >
+                {selectedUser.status === "ACTIVE"
+                  ? "Block User"
+                  : "Unblock User"}
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      )}
 
     </div>
   );

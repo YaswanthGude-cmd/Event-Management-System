@@ -281,3 +281,80 @@
     align-items: flex-start;
   }
 }
+
+/* Edit Profile Fields */
+
+.profile-field input,
+.profile-field select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #111827;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  outline: none;
+  box-sizing: border-box;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.profile-field input:focus,
+.profile-field select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* Save Button */
+
+.edit-profile-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Cancel Button */
+
+.cancel-profile-btn {
+  padding: 11px 20px;
+  margin-left: 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #374151;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.cancel-profile-btn:hover {
+  background: #f8fafc;
+  border-color: #d1d5db;
+  box-shadow: 0 3px 8px rgba(15, 23, 42, 0.08);
+}
+
+.cancel-profile-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+  .cancel-profile-btn {
+    margin-left: 0;
+    margin-top: 10px;
+    width: 100%;
+  }
+
+}

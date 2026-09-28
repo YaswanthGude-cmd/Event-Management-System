@@ -35,24 +35,31 @@
 }
 
 .registrations-table-card {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
   background-color: #ffffff;
-
   border: 1px solid #e5e7eb;
-
   border-radius: 10px;
-
   overflow: hidden;
 }
 
 .registrations-table-container {
-  width: 100%;
-
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
   overflow-x: auto;
 }
 
 .registrations-table {
-  width: 100%;
-
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 800px;
+  margin: 0 !important;
+  padding: 0 !important;
   border-collapse: collapse;
 }
 
@@ -136,4 +143,151 @@
   .registrations-toolbar input {
     width: 100%;
   }
+}
+
+.registration-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.registration-cancel-btn {
+  padding: 6px 10px;
+
+  border: none;
+
+  border-radius: 6px;
+
+  background-color: #fee2e2;
+
+  color: #dc2626;
+
+  font-size: 12px;
+
+  cursor: pointer;
+}
+
+.registration-cancel-btn:hover {
+  background-color: #fecaca;
+}
+
+.registration-cancel-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.registration-message {
+  padding: 12px 15px;
+
+  margin-bottom: 20px;
+
+  border-radius: 8px;
+
+  font-size: 13px;
+}
+
+.registration-message.error {
+  background-color: #fee2e2;
+
+  color: #b91c1c;
+}
+
+.empty-row {
+  text-align: center !important;
+
+  padding: 40px !important;
+
+  color: #9ca3af !important;
+}
+
+
+/* ================= MODAL ================= */
+
+.registration-modal-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  background-color: rgba(0, 0, 0, 0.45);
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  z-index: 1000;
+
+  padding: 20px;
+}
+
+.registration-modal {
+  width: 500px;
+
+  max-width: 100%;
+
+  background-color: #ffffff;
+
+  border-radius: 10px;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.registration-modal-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding: 18px 20px;
+
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.registration-modal-header h2 {
+  margin: 0;
+
+  font-size: 18px;
+
+  color: #111827;
+}
+
+.registration-close-btn {
+  border: none;
+
+  background: none;
+
+  font-size: 24px;
+
+  color: #6b7280;
+
+  cursor: pointer;
+}
+
+.registration-details {
+  padding: 20px;
+}
+
+.registration-details > div {
+  display: flex;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 12px 0;
+
+  border-bottom: 1px solid #f3f4f6;
+
+  font-size: 13px;
+}
+
+.registration-details strong {
+  color: #6b7280;
+}
+
+.registration-details span {
+  color: #111827;
+
+  text-align: right;
 }

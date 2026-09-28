@@ -7,6 +7,7 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+  const userRole = localStorage.getItem("userRole");
 
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
@@ -72,6 +73,19 @@ const Navbar = () => {
               </Link>
             </>
           )}
+
+          {userRole === "ADMIN" && (
+            <>
+              <Link to="/admin" className="module-switch-btn" >
+                Admin Module
+              </Link>
+              <Link to="/organizer" className="module-switch-btn" >
+                Organizer Module
+              </Link>
+            </>
+          )}
+
+          {}
 
         </div>
 

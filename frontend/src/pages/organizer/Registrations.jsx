@@ -1,37 +1,111 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Registrations.css";
 
 const Registrations = () => {
-  const registrations = [
-    {
-      id: 1,
-      participant: "Rahul",
-      event: "Tech Fest 2026",
-      date: "05 Sep 2026",
-      status: "Confirmed",
-    },
-    {
-      id: 2,
-      participant: "Priya",
-      event: "AI Workshop",
-      date: "06 Sep 2026",
-      status: "Confirmed",
-    },
-    {
-      id: 3,
-      participant: "Arjun",
-      event: "Hackathon",
-      date: "07 Sep 2026",
-      status: "Pending",
-    },
-  ];
+  const [registrations, setRegistrations] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    fetchRegistrations();
+  }, []);
+
+  const fetchRegistrations = async () => {
+    try {
+      const userId = localStorage.getItem("userId");
+      const userRole = localStorage.getItem("userRole");
+      const token = localStorage.getItem("token");
+
+      if (!userId || !token || !userRole) {
+        setError("Please login again");
+        return;
+      }
+
+      // Get events
+      let eventsUrl;
+
+      if (userRole === "ADMIN") {
+        // Admin can see registrations for all organizer events
+        eventsUrl =
+          "http://localhost:5000/api/organizers/events";
+      } else {
+        // Normal organizer can see only their own events
+        eventsUrl =
+          `http://localhost:5000/api/organizers/${userId}/events`;
+      }
+
+      const eventsResponse = await fetch(eventsUrl, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const eventsData = await eventsResponse.json();
+
+      if (!eventsResponse.ok) {
+        setError(
+          eventsData.message || "Failed to fetch events"
+        );
+        return;
+      }
+
+      const events = eventsData.events || eventsData;
+
+      let allRegistrations = [];
+
+      // Get registrations for every event
+      for (const event of events) {
+        const response = await fetch(
+          `http://localhost:5000/api/registrations/event/${event._id}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const data = await response.json();
+
+        if (response.ok) {
+          const eventRegistrations =
+            data.registrations || data;
+
+          const registrationsWithEvent =
+            eventRegistrations.map((registration) => ({
+              ...registration,
+              eventName: event.title,
+            }));
+
+          allRegistrations = [
+            ...allRegistrations,
+            ...registrationsWithEvent,
+          ];
+        }
+      }
+
+      setRegistrations(allRegistrations);
+    } catch (error) {
+      console.error(
+        "Error fetching registrations:",
+        error
+      );
+
+      setError("Unable to connect to server");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const confirmedCount = registrations.filter(
-    (registration) => registration.status === "Confirmed"
+    (registration) =>
+      registration.status === "REGISTERED"
   ).length;
 
   const pendingCount = registrations.filter(
-    (registration) => registration.status === "Pending"
+    (registration) =>
+      registration.status === "PENDING"
   ).length;
 
   return (
@@ -39,21 +113,28 @@ const Registrations = () => {
 
       {/* Page Header */}
       <div className="registrations-header">
+
         <div>
           <h1>Registrations</h1>
+
           <p>
             View and manage registrations for your events.
           </p>
         </div>
 
         <div className="registrations-summary">
+
           <div>
             <span>Total</span>
-            <strong>{registrations.length}</strong>
+
+            <strong>
+              {registrations.length}
+            </strong>
           </div>
 
           <div>
             <span>Confirmed</span>
+
             <strong className="confirmed-count">
               {confirmedCount}
             </strong>
@@ -61,89 +142,156 @@ const Registrations = () => {
 
           <div>
             <span>Pending</span>
+
             <strong className="pending-count">
               {pendingCount}
             </strong>
           </div>
+
         </div>
       </div>
+
+      {/* Loading */}
+      {loading && (
+        <p>Loading registrations...</p>
+      )}
+
+      {/* Error */}
+      {error && (
+        <p style={{ color: "red" }}>
+          {error}
+        </p>
+      )}
 
       {/* Registrations Table */}
-      <div className="registrations-table-container">
+      {!loading && !error && (
+        <div className="registrations-table-container">
 
-        <div className="table-header">
-          <div>
-            <h2>All Registrations</h2>
-            <p>
-              Track participant registrations and their current status.
-            </p>
+          <div className="table-header">
+
+            <div>
+              <h2>All Registrations</h2>
+
+              <p>
+                Track participant registrations and
+                their current status.
+              </p>
+            </div>
+
           </div>
+
+          <div className="table-wrapper">
+
+            {registrations.length === 0 ? (
+              <p>No registrations found.</p>
+            ) : (
+              <table className="registrations-table">
+
+                <thead>
+                  <tr>
+                    <th>Participant</th>
+                    <th>Event</th>
+                    <th>Registration Date</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+
+                  {registrations.map(
+                    (registration, index) => {
+
+                      const user =
+                        registration.userId || {};
+
+                      const firstName =
+                        user.firstName ||
+                        registration.firstName ||
+                        "";
+
+                      const lastName =
+                        user.lastName ||
+                        registration.lastName ||
+                        "";
+
+                      const participant =
+                        `${firstName} ${lastName}`.trim() ||
+                        registration.name ||
+                        "Unknown";
+
+                      const status =
+                        registration.status ||
+                        "REGISTERED";
+
+                      return (
+                        <tr
+                          key={
+                            registration._id ||
+                            registration.id ||
+                            index
+                          }
+                        >
+
+                          {/* Participant */}
+                          <td>
+                            <div className="registration-participant">
+
+                              <div className="participant-avatar">
+                                {participant
+                                  .charAt(0)
+                                  .toUpperCase()}
+                              </div>
+
+                              <span>
+                                {participant}
+                              </span>
+
+                            </div>
+                          </td>
+
+                          {/* Event */}
+                          <td>
+                            <span className="registration-event">
+                              {registration.eventName}
+                            </span>
+                          </td>
+
+                          {/* Date */}
+                          <td className="registration-date">
+                            {registration.createdAt
+                              ? new Date(
+                                  registration.createdAt
+                                ).toLocaleDateString()
+                              : "N/A"}
+                          </td>
+
+                          {/* Status */}
+                          <td>
+                            <span
+                              className={`registration-status ${
+                                status.toLowerCase()
+                              }`}
+                            >
+                              {status === "REGISTERED"
+                                ? "Confirmed"
+                                : status}
+                            </span>
+                          </td>
+
+                        </tr>
+                      );
+                    }
+                  )}
+
+                </tbody>
+
+              </table>
+            )}
+
+          </div>
+
         </div>
-
-        <div className="table-wrapper">
-
-          <table className="registrations-table">
-
-            <thead>
-              <tr>
-                <th>Participant</th>
-                <th>Event</th>
-                <th>Registration Date</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-
-            <tbody>
-
-              {registrations.map((registration) => (
-                <tr key={registration.id}>
-
-                  {/* Participant */}
-                  <td>
-                    <div className="registration-participant">
-
-                      <div className="participant-avatar">
-                        {registration.participant.charAt(0)}
-                      </div>
-
-                      <span>
-                        {registration.participant}
-                      </span>
-
-                    </div>
-                  </td>
-
-                  {/* Event */}
-                  <td>
-                    <span className="registration-event">
-                      {registration.event}
-                    </span>
-                  </td>
-
-                  {/* Date */}
-                  <td className="registration-date">
-                    {registration.date}
-                  </td>
-
-                  {/* Status */}
-                  <td>
-                    <span
-                      className={`registration-status ${registration.status.toLowerCase()}`}
-                    >
-                      {registration.status}
-                    </span>
-                  </td>
-
-                </tr>
-              ))}
-
-            </tbody>
-
-          </table>
-
-        </div>
-
-      </div>
+      )}
 
     </div>
   );

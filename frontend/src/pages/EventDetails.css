@@ -1,0 +1,411 @@
+.event-details-page {
+  min-height: 100vh;
+  background: #f7f8fc;
+}
+
+/* Main Container */
+
+.event-details-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 35px 0 60px;
+}
+
+/* Back Link */
+
+.back-events-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 25px;
+  color: #4f46e5;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.back-events-link:hover {
+  color: #3730a3;
+}
+
+/* Main Card */
+
+.event-details-card {
+  background: #ffffff;
+  border: 1px solid #e8eaf0;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06);
+}
+
+/* Header */
+
+.event-details-header {
+  padding: 40px 45px;
+  background: linear-gradient(135deg, #eef2ff, #f8faff);
+  border-bottom: 1px solid #e8eaf0;
+}
+
+.event-details-category {
+  display: inline-block;
+  padding: 6px 13px;
+  border-radius: 20px;
+  background: #e0e7ff;
+  color: #4338ca;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.event-details-header h1 {
+  margin: 0 0 15px;
+  color: #111827;
+  font-size: 34px;
+  line-height: 1.25;
+  font-weight: 700;
+}
+
+/* Status */
+
+.event-details-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 13px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  background: #dcfce7;
+  color: #166534;
+}
+
+.event-details-status.completed {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.event-details-status.cancelled {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.event-details-status.ongoing {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+/* Content */
+
+.event-details-content {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 45px;
+  padding: 40px 45px;
+}
+
+.event-details-description h2,
+.event-details-organizer h2 {
+  margin: 0 0 18px;
+  color: #111827;
+  font-size: 21px;
+}
+
+.event-details-description p {
+  margin: 0;
+  color: #667085;
+  font-size: 15px;
+  line-height: 1.8;
+  white-space: pre-line;
+}
+
+/* Event Information */
+
+.event-details-info {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.event-info-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 15px;
+  border: 1px solid #eaecf0;
+  border-radius: 12px;
+  background: #fafbfc;
+}
+
+.event-info-icon {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: #eef2ff;
+  font-size: 19px;
+}
+
+.event-info-item div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.event-info-item span:not(.event-info-icon) {
+  color: #667085;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.event-info-item strong {
+  color: #1f2937;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Organizer */
+
+.event-details-organizer {
+  padding: 30px 45px;
+  border-top: 1px solid #eaecf0;
+  border-bottom: 1px solid #eaecf0;
+}
+
+.organizer-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.organizer-avatar {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #4f46e5;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.organizer-info div:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.organizer-info strong {
+  color: #1f2937;
+  font-size: 15px;
+}
+
+.organizer-info span {
+  color: #667085;
+  font-size: 13px;
+}
+
+/* Actions */
+
+.event-details-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  padding: 30px 45px;
+}
+
+.register-event-btn,
+.cancel-event-btn,
+.my-registrations-btn {
+  min-height: 44px;
+  padding: 0 22px;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.register-event-btn {
+  border: none;
+  background: #4f46e5;
+  color: #ffffff;
+}
+
+.register-event-btn:hover {
+  background: #4338ca;
+  transform: translateY(-1px);
+}
+
+.register-event-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.cancel-event-btn {
+  border: 1px solid #dc2626;
+  background: #ffffff;
+  color: #dc2626;
+}
+
+.cancel-event-btn:hover {
+  background: #fef2f2;
+}
+
+.my-registrations-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #d0d5dd;
+  background: #ffffff;
+  color: #344054;
+}
+
+.my-registrations-btn:hover {
+  background: #f9fafb;
+}
+
+/* Messages */
+
+.registered-message {
+  padding: 11px 15px;
+  border-radius: 9px;
+  background: #ecfdf3;
+  color: #027a48;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.closed-message {
+  padding: 11px 15px;
+  border-radius: 9px;
+  background: #fef2f2;
+  color: #b42318;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Loading / Error */
+
+.event-details-message {
+  width: 90%;
+  max-width: 700px;
+  margin: 80px auto;
+  padding: 50px 30px;
+  text-align: center;
+  background: #ffffff;
+  border: 1px solid #eaecf0;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(15, 23, 42, 0.05);
+}
+
+.event-details-message h2 {
+  margin: 0 0 10px;
+  color: #1f2937;
+  font-size: 23px;
+}
+
+.event-details-message p {
+  margin: 0 0 25px;
+  color: #667085;
+  font-size: 14px;
+}
+
+.back-events-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 20px;
+  border-radius: 8px;
+  background: #4f46e5;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.back-events-btn:hover {
+  background: #4338ca;
+}
+
+/* Tablet */
+
+@media (max-width: 850px) {
+  .event-details-content {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .event-details-header {
+    padding: 32px;
+  }
+
+  .event-details-content {
+    padding: 32px;
+  }
+
+  .event-details-organizer,
+  .event-details-actions {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .event-details-header h1 {
+    font-size: 29px;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+  .event-details-container {
+    width: 94%;
+    padding: 25px 0 40px;
+  }
+
+  .event-details-header {
+    padding: 25px 20px;
+  }
+
+  .event-details-header h1 {
+    font-size: 25px;
+  }
+
+  .event-details-content {
+    padding: 25px 20px;
+  }
+
+  .event-details-organizer {
+    padding: 25px 20px;
+  }
+
+  .event-details-actions {
+    padding: 25px 20px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .register-event-btn,
+  .cancel-event-btn,
+  .my-registrations-btn {
+    width: 100%;
+  }
+
+  .event-info-item {
+    padding: 13px;
+  }
+
+  .event-details-message {
+    width: 90%;
+    margin: 50px auto;
+    padding: 40px 20px;
+  }
+}

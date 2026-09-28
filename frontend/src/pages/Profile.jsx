@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import "./Profile.css";
@@ -6,21 +6,125 @@ import "./Profile.css";
 const Profile = () => {
   const navigate = useNavigate();
 
-  const storedEmail =
-    localStorage.getItem("userEmail") || "student@anits.edu.in";
-
   const [isEditing, setIsEditing] = useState(false);
 
   const [profile, setProfile] = useState({
-    name: localStorage.getItem("userName") || "Yaswanth Gude",
-    email: storedEmail,
-    phone: localStorage.getItem("userPhone") || "+91 9876543210",
-    rollNo: localStorage.getItem("userRollNo") || "22IT001",
-    department:
-      localStorage.getItem("userDepartment") ||
-      "Information Technology",
-    year: localStorage.getItem("userYear") || "2nd Year",
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    role: "",
+    status: "",
   });
+
+  const [registeredEvents, setRegisteredEvents] = useState(0);
+  const [completedEvents, setCompletedEvents] = useState(0);
+
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    fetchProfile();
+  }, []);
+
+  const fetchProfile = async () => {
+    try {
+      const userId = localStorage.getItem("userId");
+      const token = localStorage.getItem("token");
+
+      if (!userId || !token) {
+        navigate("/login");
+        return;
+      }
+
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+
+      const [userResponse, registrationsResponse] =
+        await Promise.all([
+          fetch(
+            `http://localhost:5000/api/users/${userId}`,
+            {
+              method: "GET",
+              headers,
+            }
+          ),
+
+          fetch(
+            `http://localhost:5000/api/registrations/user/${userId}`,
+            {
+              method: "GET",
+              headers,
+            }
+          ),
+        ]);
+
+      const userData = await userResponse.json();
+      const registrationsData =
+        await registrationsResponse.json();
+
+      if (!userResponse.ok) {
+        throw new Error(
+          userData.message || "Failed to fetch profile"
+        );
+      }
+
+      if (!registrationsResponse.ok) {
+        throw new Error(
+          registrationsData.message ||
+            "Failed to fetch registrations"
+        );
+      }
+
+      const user = userData.user || userData;
+
+      setProfile({
+        firstName: user.firstName || "",
+        lastName: user.lastName || "",
+        email: user.email || "",
+        phone: user.phone || "",
+        role: user.role || "",
+        status: user.status || "",
+      });
+
+      // Keep localStorage name updated
+      localStorage.setItem(
+        "userName",
+        `${user.firstName || ""} ${user.lastName || ""}`.trim()
+      );
+
+      localStorage.setItem("userEmail", user.email || "");
+
+      const registrations =
+        registrationsData.registrations || [];
+
+      const registered = registrations.filter(
+        (registration) =>
+          registration.status === "REGISTERED"
+      ).length;
+
+      const completed = registrations.filter(
+        (registration) =>
+          registration.eventId?.status === "COMPLETED"
+      ).length;
+
+      setRegisteredEvents(registered);
+      setCompletedEvents(completed);
+    } catch (error) {
+      console.error(
+        "Error fetching profile:",
+        error
+      );
+
+      setError(
+        error.message || "Unable to load profile"
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleChange = (e) => {
     setProfile({
@@ -29,16 +133,84 @@ const Profile = () => {
     });
   };
 
-  const handleSave = () => {
-    localStorage.setItem("userName", profile.name);
-    localStorage.setItem("userPhone", profile.phone);
-    localStorage.setItem("userRollNo", profile.rollNo);
-    localStorage.setItem("userDepartment", profile.department);
-    localStorage.setItem("userYear", profile.year);
+  const handleSave = async () => {
+    try {
+      setSaving(true);
 
+      const userId = localStorage.getItem("userId");
+      const token = localStorage.getItem("token");
+
+      if (!userId || !token) {
+        navigate("/login");
+        return;
+      }
+
+      const response = await fetch(
+        `http://localhost:5000/api/users/${userId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            firstName: profile.firstName,
+            lastName: profile.lastName,
+            phone: profile.phone,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(
+          data.message || "Failed to update profile"
+        );
+        return;
+      }
+
+      const updatedUser = data.user;
+
+      setProfile({
+        firstName: updatedUser.firstName || "",
+        lastName: updatedUser.lastName || "",
+        email: updatedUser.email || "",
+        phone: updatedUser.phone || "",
+        role: updatedUser.role || "",
+        status: updatedUser.status || "",
+      });
+
+      localStorage.setItem(
+        "userName",
+        `${updatedUser.firstName || ""} ${
+          updatedUser.lastName || ""
+        }`.trim()
+      );
+
+      localStorage.setItem(
+        "userEmail",
+        updatedUser.email || ""
+      );
+
+      setIsEditing(false);
+
+      alert("Profile updated successfully!");
+    } catch (error) {
+      console.error(
+        "Error updating profile:",
+        error
+      );
+
+      alert("Unable to connect to server");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleCancel = () => {
     setIsEditing(false);
-
-    alert("Profile updated successfully!");
+    fetchProfile();
   };
 
   const handleLogout = () => {
@@ -46,14 +218,66 @@ const Profile = () => {
     localStorage.removeItem("userEmail");
     localStorage.removeItem("userRole");
     localStorage.removeItem("userName");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("token");
 
     navigate("/login");
   };
 
+  const fullName =
+    `${profile.firstName} ${profile.lastName}`.trim() ||
+    "User";
+
+  const initials =
+    `${profile.firstName?.charAt(0) || ""}${
+      profile.lastName?.charAt(0) || ""
+    }`.toUpperCase() || "U";
+
+  if (loading) {
+    return (
+      <div className="profile-page">
+        <Navbar />
+
+        <div className="profile-loading">
+          <div className="profile-loading-card">
+            <div className="loading-spinner"></div>
+            <h2>Loading Profile</h2>
+            <p>Please wait while we fetch your details.</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="profile-page">
+        <Navbar />
+
+        <div className="profile-loading">
+          <div className="profile-loading-card">
+            <div className="profile-error-icon">!</div>
+
+            <h2>Unable to Load Profile</h2>
+
+            <p>{error}</p>
+
+            <button
+              type="button"
+              className="edit-profile-btn"
+              onClick={fetchProfile}
+            >
+              Try Again
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="profile-page">
 
-      {/* NAVBAR */}
       <Navbar />
 
       <div className="profile-layout">
@@ -61,28 +285,40 @@ const Profile = () => {
         {/* SIDEBAR */}
         <aside className="profile-sidebar">
 
-          <div className="profile-avatar">
-            {profile.name.charAt(0).toUpperCase()}
-          </div>
+          <div className="profile-user-card">
 
-          <h2>{profile.name}</h2>
-          <p>{profile.email}</p>
+            <div className="profile-avatar">
+              {initials}
+            </div>
+
+            <h2>{fullName}</h2>
+
+            <p>{profile.email}</p>
+
+            <span className="profile-role">
+              {profile.role || "USER"}
+            </span>
+
+          </div>
 
           <nav className="profile-nav">
 
             <Link to="/dashboard">
-              📊 Dashboard
+              <span>📊</span>
+              <span>Dashboard</span>
             </Link>
 
             <Link to="/my-registrations">
-              📄 My Registrations
+              <span>📄</span>
+              <span>My Registrations</span>
             </Link>
 
             <Link
               to="/profile"
               className="active"
             >
-              👤 Profile
+              <span>👤</span>
+              <span>Profile</span>
             </Link>
 
           </nav>
@@ -92,7 +328,8 @@ const Profile = () => {
             className="profile-logout"
             onClick={handleLogout}
           >
-            ↪ Logout
+            <span>↪</span>
+            <span>Logout</span>
           </button>
 
         </aside>
@@ -104,10 +341,15 @@ const Profile = () => {
           <div className="profile-header">
 
             <div>
+              <span className="profile-page-label">
+                ACCOUNT
+              </span>
+
               <h1>My Profile</h1>
 
               <p>
-                Manage your personal information and account details.
+                Manage your personal information and
+                account details.
               </p>
             </div>
 
@@ -127,28 +369,60 @@ const Profile = () => {
           <section className="profile-card">
 
             <div className="card-heading">
-              <h2>Personal Information</h2>
-              <span>👤</span>
+
+              <div>
+                <h2>Personal Information</h2>
+                <p>
+                  Your basic account information
+                </p>
+              </div>
+
+              <div className="card-heading-icon">
+                👤
+              </div>
+
             </div>
 
             <div className="profile-form">
 
               <div className="form-group">
-                <label htmlFor="name">
-                  Full Name
+
+                <label htmlFor="firstName">
+                  First Name
                 </label>
 
                 <input
-                  id="name"
+                  id="firstName"
                   type="text"
-                  name="name"
-                  value={profile.name}
+                  name="firstName"
+                  value={profile.firstName}
                   onChange={handleChange}
                   disabled={!isEditing}
+                  placeholder="Enter first name"
                 />
+
               </div>
 
               <div className="form-group">
+
+                <label htmlFor="lastName">
+                  Last Name
+                </label>
+
+                <input
+                  id="lastName"
+                  type="text"
+                  name="lastName"
+                  value={profile.lastName}
+                  onChange={handleChange}
+                  disabled={!isEditing}
+                  placeholder="Enter last name"
+                />
+
+              </div>
+
+              <div className="form-group">
+
                 <label htmlFor="email">
                   Email Address
                 </label>
@@ -162,11 +436,13 @@ const Profile = () => {
                 />
 
                 <small>
-                  Email cannot be changed.
+                  Email address cannot be changed.
                 </small>
+
               </div>
 
               <div className="form-group">
+
                 <label htmlFor="phone">
                   Phone Number
                 </label>
@@ -178,56 +454,9 @@ const Profile = () => {
                   value={profile.phone}
                   onChange={handleChange}
                   disabled={!isEditing}
+                  placeholder="Enter phone number"
                 />
-              </div>
 
-              <div className="form-group">
-                <label htmlFor="rollNo">
-                  Roll Number
-                </label>
-
-                <input
-                  id="rollNo"
-                  type="text"
-                  name="rollNo"
-                  value={profile.rollNo}
-                  onChange={handleChange}
-                  disabled={!isEditing}
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="department">
-                  Department
-                </label>
-
-                <input
-                  id="department"
-                  type="text"
-                  name="department"
-                  value={profile.department}
-                  onChange={handleChange}
-                  disabled={!isEditing}
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="year">
-                  Year
-                </label>
-
-                <select
-                  id="year"
-                  name="year"
-                  value={profile.year}
-                  onChange={handleChange}
-                  disabled={!isEditing}
-                >
-                  <option>1st Year</option>
-                  <option>2nd Year</option>
-                  <option>3rd Year</option>
-                  <option>4th Year</option>
-                </select>
               </div>
 
             </div>
@@ -238,7 +467,8 @@ const Profile = () => {
                 <button
                   type="button"
                   className="cancel-btn"
-                  onClick={() => setIsEditing(false)}
+                  onClick={handleCancel}
+                  disabled={saving}
                 >
                   Cancel
                 </button>
@@ -247,8 +477,11 @@ const Profile = () => {
                   type="button"
                   className="save-btn"
                   onClick={handleSave}
+                  disabled={saving}
                 >
-                  Save Changes
+                  {saving
+                    ? "Saving..."
+                    : "Save Changes"}
                 </button>
 
               </div>
@@ -260,33 +493,67 @@ const Profile = () => {
           <section className="profile-card">
 
             <div className="card-heading">
-              <h2>Account Information</h2>
-              <span>🔐</span>
+
+              <div>
+                <h2>Account Information</h2>
+                <p>
+                  Your account and participation details
+                </p>
+              </div>
+
+              <div className="card-heading-icon">
+                🔐
+              </div>
+
             </div>
 
             <div className="account-info">
 
-              <div>
+              <div className="account-info-item">
+
                 <span>Account Status</span>
 
-                <strong className="status-active">
-                  ● Active
+                <strong
+                  className={
+                    profile.status === "ACTIVE"
+                      ? "status-active"
+                      : "status-other"
+                  }
+                >
+                  ●{" "}
+                  {profile.status || "UNKNOWN"}
                 </strong>
+
               </div>
 
-              <div>
+              <div className="account-info-item">
+
                 <span>Account Type</span>
-                <strong>Student</strong>
+
+                <strong>
+                  {profile.role || "USER"}
+                </strong>
+
               </div>
 
-              <div>
+              <div className="account-info-item">
+
                 <span>Registered Events</span>
-                <strong>8 Events</strong>
+
+                <strong>
+                  {registeredEvents}
+                </strong>
+
               </div>
 
-              <div>
+              <div className="account-info-item">
+
                 <span>Completed Events</span>
-                <strong>5 Events</strong>
+
+                <strong>
+                  {completedEvents}
+                </strong>
+
               </div>
 
             </div>
